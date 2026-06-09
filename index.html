@@ -70,9 +70,9 @@
             <button class="tab-btn" data-action="mudarTab" data-tab="despesas">💰 Despesas</button>
             <button class="tab-btn" data-action="mudarTab" data-tab="alertas">⚠️ Alertas</button>
             <button class="tab-btn" data-action="mudarTab" data-tab="backup">💾 Backup</button>
+            <button class="tab-btn" data-action="mudarTab" data-tab="config">⚙️ Config.</button>
         </div>
 
-        <!-- DASHBOARD -->
         <div id="dashboard" class="tab-content active">
             <div class="stats-grid" id="statsGrid"></div>
             <h3>🛡️ Resumo de Seguros</h3>
@@ -84,7 +84,6 @@
             </div>
         </div>
 
-        <!-- VEÍCULOS -->
         <div id="veiculos" class="tab-content">
             <h3>🚗 Veículos Cadastrados</h3>
             <div class="table-container">
@@ -105,13 +104,19 @@
             <div class="form-group"><label>Data da Compra</label><input type="date" id="vDataCompra"></div>
             <div class="form-group"><label>Valor Compra</label><input type="number" id="vValor" placeholder="R$"></div>
             <div class="form-group"><label>Local da Compra / Concessionária</label><input type="text" id="vLocal" placeholder="Ex: Concessionária VW"></div>
+            
+            <div class="form-group">
+                <label>📄 Anexar Documentos (Fotos ou PDFs)</label>
+                <input type="file" id="vDocumento" accept="image/*,application/pdf" data-action="processarArquivoDrive">
+                <div id="listaArquivosForm" style="margin-top: 10px;"></div>
+            </div>
+
             <div class="button-group">
                 <button data-action="salvarVeiculo" id="btnSalvarVeiculo">➕ Adicionar</button>
                 <button data-action="limparVeiculoForm" class="secondary">🧹 Limpar</button>
             </div>
         </div>
 
-        <!-- SEGUROS (NOVO MÓDULO) -->
         <div id="seguros" class="tab-content">
             <h3>🛡️ Seguros Cadastrados</h3>
             <div class="filter-box">
@@ -141,7 +146,6 @@
             </div>
         </div>
 
-        <!-- PEÇAS -->
         <div id="pecas" class="tab-content">
             <h3>🔧 Peças Cadastradas</h3>
             <div class="filter-box">
@@ -167,7 +171,6 @@
             </div>
         </div>
 
-        <!-- ABASTECIMENTOS -->
         <div id="abastecimentos" class="tab-content">
             <h3>⛽ Histórico de Abastecimentos</h3>
             <div class="filter-box">
@@ -195,7 +198,6 @@
             </div>
         </div>
 
-        <!-- REVISÕES -->
         <div id="revisoes" class="tab-content">
             <h3>🔩 Histórico de Revisões</h3>
             <div class="filter-box">
@@ -233,7 +235,6 @@
             </div>
         </div>
 
-        <!-- REPAROS -->
         <div id="reparos" class="tab-content">
             <h3>🛠️ Histórico de Reparos</h3>
             <div class="filter-box">
@@ -271,7 +272,6 @@
             </div>
         </div>
 
-        <!-- TAXAS E DESPESAS EXTRA -->
         <div id="despesas" class="tab-content">
             <h3>💰 Histórico de Taxas / Despesas</h3>
             <div class="filter-box">
@@ -298,10 +298,8 @@
             </div>
         </div>
 
-        <!-- ALERTAS -->
         <div id="alertas" class="tab-content"><div id="alertasLista"></div></div>
 
-        <!-- BACKUP -->
         <div id="backup" class="tab-content">
             <div style="text-align:center">
                 <h3>💾 Backup</h3>
@@ -321,9 +319,24 @@
                 </div>
             </div>
         </div>
+
+        <div id="config" class="tab-content">
+            <div style="text-align:center">
+                <h3>⚙️ Configurações do Google Drive</h3>
+                <p style="font-size: 13px; color: #555; margin-bottom: 15px; max-width:400px; margin-left:auto; margin-right:auto;">
+                    Cole abaixo a URL do seu Google Apps Script (Web App) para habilitar múltiplos anexos por veículo diretamente na sua conta do Drive.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>URL do Web App (Google Apps Script)*</label>
+                <input type="text" id="configUrlDrive" placeholder="https://script.google.com/macros/s/.../exec">
+            </div>
+            <div class="button-group" style="justify-content:center">
+                <button data-action="salvarConfig">💾 Salvar Configurações</button>
+            </div>
+        </div>
     </div>
 
-    <!-- MODAL DE PEÇAS DA REVISÃO -->
     <div id="modalPecas" class="modal">
         <div class="modal-content">
             <h3>Peças Utilizadas</h3>
@@ -332,7 +345,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE DETALHES DO REPARO -->
     <div id="modalReparos" class="modal">
         <div class="modal-content">
             <h3>Detalhes do Reparo</h3>
@@ -341,7 +353,6 @@
         </div>
     </div>
 
-    <!-- NOVO MODAL: DETALHES COMPLETOS DO VEÍCULO -->
     <div id="modalVeiculoDetalhes" class="modal">
         <div class="modal-content">
             <h3>Ficha do Veículo</h3>
@@ -366,6 +377,8 @@
             
             let listaPecasTemp = [];
             let listaPecasRepTemp = [];
+            let listaArquivosTemp = [];
+            let urlServidorDrive = localStorage.getItem('urlServidorDrive') || '';
 
             const formatarMoeda = (valor) => (valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
@@ -389,7 +402,7 @@
                         dados = { ...dados, ...loaded };
                         for(let k in ids) {
                             if(dados[k] && dados[k].length) {
-                                ids[k] = Math.max(...dados[k].map(i => i.id || 0)) + 1;
+                                ids[k] = Math.max(...dados[k].map(i => Number(i.id) || 0)) + 1;
                             }
                         }
                     } catch(e) { console.error("Erro ao carregar dados", e); }
@@ -401,11 +414,21 @@
                 if(!dados.despesas) dados.despesas = [];
                 
                 if(dados.veiculos.length === 0) { 
-                    dados.veiculos = [{ id:1, marca:"Volkswagen", modelo:"Gol", ano:2020, cor:"Prata", placa:"ABC-1234", chassi:"9BW...", dataCompra:"", valorCompra:45000, renavam:"123456789", local:"Concessionária" }]; 
+                    dados.veiculos = [{ id:1, marca:"Volkswagen", modelo:"Gol", ano:2020, cor:"Prata", placa:"ABC-1234", chassi:"9BW...", dataCompra:"", valorCompra:45000, renavam:"123456789", local:"Concessionária", arquivos: [] }]; 
                     dados.pecas = [{ id:1, veiculoId: 0, nome:"Óleo do Motor Geral", marca:"Shell", preco:45.90, local:"Auto Peças" }]; 
                     ids.veiculos = 2; ids.pecas = 2; 
                     salvar(); 
                 }
+
+                // CORREÇÃO: Garante que os IDs antigos salvos como strings sejam convertidos para números
+                ['pecas', 'veiculos', 'revisoes', 'reparos', 'seguros', 'abastecimentos', 'despesas'].forEach(chave => {
+                    if(dados[chave]) {
+                        dados[chave].forEach(item => { item.id = Number(item.id); });
+                    }
+                });
+
+                const inputUrl = document.getElementById('configUrlDrive');
+                if(inputUrl) inputUrl.value = urlServidorDrive;
             }
 
             function renderTudo() {
@@ -427,6 +450,17 @@
                     </tr>`).join('');
             }
 
+            function renderListaArquivosForm() {
+                const container = document.getElementById('listaArquivosForm');
+                if(!container) return;
+                container.innerHTML = listaArquivosTemp.map((arq, idx) => `
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:#f0f0f0; padding:6px 10px; border-radius:8px; margin-bottom:5px; font-size:12px;">
+                        <span style="word-break:break-all; flex:1; margin-right:5px; color:#333;">📄 ${arq.nome}</span>
+                        <button type="button" class="danger small" data-action="removerArquivoTemp" data-idx="${idx}" style="padding:2px 6px; margin:0; font-size:11px;">🗑️</button>
+                    </div>
+                `).join('');
+            }
+
             function verDetalhesVeiculo(id) {
                 const v = dados.veiculos.find(ve => ve.id === id); if(!v) return;
                 const container = document.getElementById('modalVeicConteudo'); if(!container) return;
@@ -436,6 +470,19 @@
                 const totalReparos = dados.reparos.filter(rep => rep.veiculoId === id).reduce((s,rep)=> s + (rep.custo||0),0);
                 const totalDespesas = dados.despesas.filter(d => d.veiculoId === id).reduce((s,d)=> s + (d.valor||0),0);
                 const totalSeguros = dados.seguros.filter(s => s.veiculoId === id).reduce((s, seg)=> s + (seg.valorPago||0),0);
+
+                let htmlArquivos = '';
+                if (v.arquivos && v.arquivos.length > 0) {
+                    htmlArquivos = '<h4 style="color:#764ba2; margin-bottom:8px; margin-top:10px;">📄 Documentos Anexados:</h4>' + 
+                    v.arquivos.map(arq => `
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:#f5f5f5; padding:8px; border-radius:8px; margin-bottom:6px; font-size:13px;">
+                            <a href="${arq.url}" target="_blank" style="color:#667eea; text-decoration:none; font-weight:bold; word-break:break-all; flex:1; margin-right:8px;">🔗 ${arq.nome}</a>
+                            <button class="danger small" data-action="excluirArquivoObjeto" data-veiculo-id="${v.id}" data-arquivo-id="${arq.id}" style="padding:4px 8px; font-size:11px; margin:0;">🗑️</button>
+                        </div>
+                    `).join('');
+                } else {
+                    htmlArquivos = '<h4 style="color:#764ba2; margin-bottom:8px; margin-top:10px;">📄 Documentos Anexados:</h4><p style="color:#999; font-size:13px;">Nenhum documento anexado.</p>';
+                }
 
                 container.innerHTML = `
                     <div class="detalhe-bloco"><strong>Placa:</strong> ${v.placa}</div>
@@ -447,6 +494,9 @@
                     <div class="detalhe-bloco"><strong>Data da Compra:</strong> ${v.dataCompra ? v.dataCompra.split('-').reverse().join('/') : 'Não informada'}</div>
                     <div class="detalhe-bloco"><strong>Local da Compra:</strong> ${v.local || 'Não informado'}</div>
                     <div class="detalhe-bloco"><strong>Valor de Compra:</strong> ${formatarMoeda(v.valorCompra)}</div>
+                    
+                    <hr style="margin:10px 0; border:0; border-top:1px dashed #ddd;">
+                    ${htmlArquivos}
                     
                     <hr style="margin:10px 0; border:0; border-top:1px dashed #ddd;">
                     <h4 style="color:#764ba2; margin-bottom:8px;">📊 Resumo Acumulado de Gastos:</h4>
@@ -478,10 +528,10 @@
 
                 if(editandoVeiculoId) {
                     const idx = dados.veiculos.findIndex(v => v.id === editandoVeiculoId);
-                    if(idx !== -1) dados.veiculos[idx] = { id: editandoVeiculoId, marca, modelo, ano, cor, placa, chassi, dataCompra, valorCompra, renavam, local };
+                    if(idx !== -1) dados.veiculos[idx] = { id: editandoVeiculoId, marca, modelo, ano, cor, placa, chassi, dataCompra, valorCompra, renavam, local, arquivos: [...listaArquivosTemp] };
                     editandoVeiculoId = null; document.getElementById('btnSalvarVeiculo').innerHTML = '➕ Adicionar';
                 } else {
-                    dados.veiculos.push({ id: ids.veiculos++, marca, modelo, ano, cor, placa, chassi, dataCompra, valorCompra, renavam, local });
+                    dados.veiculos.push({ id: ids.veiculos++, marca, modelo, ano, cor, placa, chassi, dataCompra, valorCompra, renavam, local, arquivos: [...listaArquivosTemp] });
                 }
                 salvar(); renderVeiculos(); atualizarCombos(); limparVeiculo(); atualizarStatus("Veículo salvo");
             }
@@ -497,6 +547,10 @@
                     document.getElementById('vValor').value = v.valorCompra || '';
                     document.getElementById('vRenavam').value = v.renavam || '';
                     document.getElementById('vLocal').value = v.local || '';
+                    
+                    listaArquivosTemp = v.arquivos ? [...v.arquivos] : [];
+                    renderListaArquivosForm();
+                    
                     editandoVeiculoId = id; document.getElementById('btnSalvarVeiculo').innerHTML = '✏️ Atualizar';
                 }
             }
@@ -515,13 +569,15 @@
             }
 
             function limparVeiculo() {
-                ['vMarca', 'vModelo', 'vAno', 'vCor', 'vPlaca', 'vChassi', 'vDataCompra', 'vValor', 'vRenavam', 'vLocal'].forEach(id => {
+                ['vMarca', 'vModelo', 'vAno', 'vCor', 'vPlaca', 'vChassi', 'vDataCompra', 'vValor', 'vRenavam', 'vLocal', 'vDocumento'].forEach(id => {
                     const el = document.getElementById(id); if(el) el.value = '';
                 });
+                listaArquivosTemp = [];
+                renderListaArquivosForm();
                 editandoVeiculoId = null; document.getElementById('btnSalvarVeiculo').innerHTML = '➕ Adicionar';
             }
 
-            // MÓDULO: SEGUROS (NOVO)
+            // MÓDULO: SEGUROS
             function renderSeguros() {
                 const filtroId = parseInt(document.getElementById('filtroSegVeiculo')?.value) || 0;
                 const tbody = document.querySelector('#tabelaSeguros tbody'); if(!tbody) return;
@@ -796,7 +852,8 @@
                     const idx = dados.revisoes.findIndex(r => r.id === editandoRevisaoId);
                     if (idx !== -1) {
                         dados.revisoes[idx] = { id: editandoRevisaoId, veiculoId, data, km, custoMao, custoPecas: totalPecas, custoTotal, proxKm, proxData: d.toISOString().split('T')[0], local };
-                        dados.revisaoPecas = dados.revisaoPecas.filter(p => p.revisaoId !== editandoRevisaoId);
+                        // CORREÇÃO: Assegura o filtro comparando como Number para não manter o rastro da peça antiga
+                        dados.revisaoPecas = dados.revisaoPecas.filter(p => Number(p.revisaoId) !== Number(editandoRevisaoId));
                     }
                 } else {
                     const novaRev = { id: ids.revisoes++, veiculoId, data, km, custoMao, custoPecas: totalPecas, custoTotal, proxKm, proxData: d.toISOString().split('T')[0], local };
@@ -822,6 +879,31 @@
                 renderListaPecasRev(); atualizarTotalRev(); calcProxData();
                 editandoRevisaoId = id; document.getElementById('btnSalvarRevisao').innerHTML = '✏️ Atualizar Revisão';
                 acionarTabMobile("revisoes");
+            }
+
+            // CORREÇÃO: Função nova para exibir as peças corretamente na tabela de Revisões
+            function verPecasRev(id) {
+                const rev = dados.revisoes.find(r => r.id === id); 
+                if(!rev) return;
+                
+                const pecasVinculadas = dados.revisaoPecas.filter(p => Number(p.revisaoId) === Number(id));
+                const container = document.getElementById('modalLista'); 
+                if(!container) return;
+
+                let htmlPecas = pecasVinculadas.map(p => {
+                    const po = dados.pecas.find(po => Number(po.id) === Number(p.pecaId));
+                    return `<div class="peca-item" style="font-size:13px;">
+                        <span>${po ? po.nome : 'Peça desconhecida'} (x${p.quantidade})</span> 
+                        <span>${formatarMoeda(p.total)}</span>
+                    </div>`;
+                }).join('');
+                
+                if(pecasVinculadas.length === 0) {
+                    htmlPecas = '<p style="color:#777; font-size:13px; text-align:center;">Nenhuma peça utilizada nesta revisão.</p>';
+                }
+
+                container.innerHTML = htmlPecas;
+                document.getElementById('modalPecas').style.display = 'flex';
             }
 
             function renderRevisoes() {
@@ -888,7 +970,8 @@
                     const idx = dados.reparos.findIndex(rep => rep.id === editandoReparoId);
                     if (idx !== -1) {
                         dados.reparos[idx] = { id: editandoReparoId, veiculoId, tipo, custoMao, custoPecas: totalPecas, custo: custoTotal, descricao, data: dados.reparos[idx].data, local };
-                        dados.reparoPecas = dados.reparoPecas.filter(p => p.eventoId !== editandoReparoId);
+                        // CORREÇÃO: Assegura a remoção do rastro da peça no caso do reparo
+                        dados.reparoPecas = dados.reparoPecas.filter(p => Number(p.eventoId) !== Number(editandoReparoId));
                     }
                 } else {
                     const novoReparo = { id: ids.reparos++, veiculoId, tipo, custoMao, custoPecas: totalPecas, custo: custoTotal, descricao, data: new Date().toISOString().split('T')[0], local };
@@ -916,6 +999,7 @@
                 acionarTabMobile("reparos");
             }
 
+            // MÓDULO: REPAROS CONTINUAÇÃO
             function renderReparos() {
                 const filtroId = parseInt(document.getElementById('filtroRepVeiculo')?.value) || 0;
                 const tbody = document.querySelector('#tabelaReparos tbody'); if(!tbody) return;
@@ -1113,9 +1197,21 @@
                 a.download = `frota_${new Date().toISOString().split('T')[0]}.json`; a.click(); 
             }
 
+            // CORREÇÃO: Garante o recálculo dos IDs ao importar um JSON
             function importarDados(file) { 
                 const r = new FileReader(); r.onload = ev => { 
-                    try { const imp = JSON.parse(ev.target.result); dados = { ...dados, ...imp }; salvar(); renderTudo(); } catch(err) { alert("Ficheiro inválido."); } 
+                    try { 
+                        const imp = JSON.parse(ev.target.result); 
+                        dados = { ...dados, ...imp }; 
+                        
+                        for(let k in ids) {
+                            if(dados[k] && dados[k].length) {
+                                ids[k] = Math.max(...dados[k].map(i => Number(i.id) || 0)) + 1;
+                            }
+                        }
+                        
+                        salvar(); renderTudo(); 
+                    } catch(err) { alert("Ficheiro inválido."); } 
                 }; r.readAsText(file); 
             }
 
@@ -1189,8 +1285,8 @@
                 if(action === 'editAbast') editAbastecimento(id);
                 if(action === 'delAbast') delAbastecimento(id);
                 if(action === 'editRevisao') editRevisao(id);
-                if(action === 'removePecaRev') { removePecaRev(idx); }
-                if(action === 'verPecasRev') verPecasRev(id);
+                if(action === 'removePecaRev') { listaPecasTemp.splice(idx,1); renderListaPecasRev(); atualizarTotalRev(); }
+                if(action === 'verPecasRev') verPecasRev(id); // CORREÇÃO: Ação incluída aqui
                 if(action === 'delRevisao') delRevisao(id);
                 if(action === 'editReparo') editReparo(id);
                 if(action === 'removePecaRep') { listaPecasRepTemp.splice(idx,1); renderListaPecasRep(); atualizarTotalRep(); }
@@ -1208,6 +1304,28 @@
                     const input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
                     input.onchange = ev => { if(ev.target.files[0]) importarDados(ev.target.files[0]); }; input.click();
                 }
+
+                if(action === 'salvarConfig') {
+                    urlServidorDrive = document.getElementById('configUrlDrive').value.trim();
+                    localStorage.setItem('urlServidorDrive', urlServidorDrive);
+                    atualizarStatus("Configurações salvas!");
+                }
+                if(action === 'removerArquivoTemp') {
+                    listaArquivosTemp.splice(idx, 1);
+                    renderListaArquivosForm();
+                }
+                if(action === 'excluirArquivoObjeto') {
+                    const veiculoId = parseInt(target.getAttribute('data-veiculo-id'));
+                    const arquivoId = parseFloat(target.getAttribute('data-arquivo-id'));
+                    if(confirm("Deseja remover este anexo do veículo?")) {
+                        const v = dados.veiculos.find(ve => ve.id === veiculoId);
+                        if(v && v.arquivos) {
+                            v.arquivos = v.arquivos.filter(arq => arq.id !== arquivoId);
+                            salvar();
+                            verDetalhesVeiculo(veiculoId);
+                        }
+                    }
+                }
             });
 
             document.addEventListener('change', function(e) {
@@ -1220,6 +1338,60 @@
                 if(action === 'filtrarTabelaSeguros') renderSeguros();
                 if(action === 'atualizarPecasContextuaisRev') { atualizarPecasContextuaisRev(); atualizarTotalRev(); }
                 if(action === 'atualizarPecasContextuaisRep') { atualizarPecasContextuaisRep(); atualizarTotalRep(); }
+
+                if(action === 'processarArquivoDrive') {
+                    const file = e.target.files[0];
+                    if(!file) return;
+
+                    if(!urlServidorDrive) {
+                        alert("⚠️ Por favor, cole a URL do seu Google Apps Script na aba '⚙️ Config.' antes de enviar arquivos.");
+                        e.target.value = '';
+                        return;
+                    }
+
+                    const containerForm = document.getElementById('listaArquivosForm');
+                    if (containerForm) {
+                        containerForm.innerHTML += `<div id="statusUploadTemp" style="color:#764ba2; font-size:12px; margin-top:5px; font-weight:bold;">⏳ Enviando "${file.name}" para o seu Drive...</div>`;
+                    }
+                    
+                    const btnSalvar = document.getElementById('btnSalvarVeiculo');
+                    if(btnSalvar) { btnSalvar.disabled = true; btnSalvar.style.opacity = '0.5'; }
+
+                    const reader = new FileReader();
+                    reader.onload = async (evento) => {
+                        const base64Data = evento.target.result;
+                        try {
+                            const response = await fetch(urlServidorDrive, {
+                                method: 'POST',
+                                body: JSON.stringify({
+                                    fileName: file.name,
+                                    mimeType: file.type,
+                                    base64: base64Data
+                                })
+                            });
+                            const result = await response.json();
+                            if(result.success) {
+                                listaArquivosTemp.push({
+                                    id: Date.now() + Math.random(),
+                                    nome: file.name,
+                                    url: result.url
+                                });
+                                renderListaArquivosForm();
+                                atualizarStatus("Arquivo adicionado!");
+                            } else {
+                                throw new Error(result.error);
+                            }
+                        } catch (error) {
+                            alert("❌ Erro técnico: " + error.message + "\n\nVerifique se a URL do Script está correta e se o Web App tem permissão de 'Qualquer pessoa'.");
+console.error("Detalhes do erro:", error);
+                            renderListaArquivosForm();
+                        } finally {
+                            if(btnSalvar) { btnSalvar.disabled = false; btnSalvar.style.opacity = '1'; }
+                            e.target.value = '';
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
             });
 
             document.getElementById('revData')?.addEventListener('change', calcProxData);
