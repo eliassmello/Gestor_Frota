@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-	<link rel="manifest" href="manifest.json">
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-capable" content="yes">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Gestor de Frota</title>
@@ -24,38 +21,41 @@
         label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; color: #333; }
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 12px; font-size: 16px; background: white; color: #333; -webkit-appearance: none; }
         input:focus, select:focus { outline: none; border-color: #667eea; }
-        input:read-only { background: #f5f5f5; color: #666; cursor: not-allowed; }
-        button { background: #667eea; color: white; border: none; padding: 12px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 15px; margin: 4px; transition: background 0.2s, transform 0.1s; display: inline-flex; align-items: center; justify-content: center; }
+        button { background: #667eea; color: white; border: none; padding: 12px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 15px; margin: 4px; transition: background 0.2s, transform 0.1s; }
         button:active { transform: scale(0.95); background: #5a6fd6; }
-        button.danger { background: #e74c3c; color: white; }
+        button.danger { background: #e74c3c; }
         button.danger:active { background: #c0392b; }
-        button.secondary { background: #95a5a6; color: white; }
-        button.secondary:active { background: #7f8c8d; }
+        button.secondary { background: #95a5a6; }
         button.small { padding: 8px 12px; font-size: 13px; }
         .button-group { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
-        .table-container { overflow-x: auto; margin-bottom: 20px; border-radius: 8px; border: 1px solid #dee2e6; -webkit-overflow-scrolling: touch; }
+        .table-container { overflow-x: auto; margin-bottom: 20px; border-radius: 8px; border: 1px solid #dee2e6; }
         table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 600px; }
         th { background: #f8f9fa; padding: 10px 8px; text-align: left; border-bottom: 2px solid #dee2e6; color: #555; }
         td { padding: 8px; border-bottom: 1px solid #dee2e6; color: #333; vertical-align: middle; }
         .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
-        .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 10px; border-radius: 16px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .stat-card h3 { font-size: 1.3em; margin-bottom: 5px; word-break: break-all; }
+        .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 10px; border-radius: 16px; text-align: center; }
+        .stat-card h3 { font-size: 1.3em; margin-bottom: 5px; }
         .peca-item { background: #f0f0f0; padding: 10px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .total-container { background: #667eea; color: white; padding: 15px; border-radius: 12px; margin: 10px 0; text-align: center; font-weight: bold; font-size: 16px; }
+        .total-container { background: #667eea; color: white; padding: 15px; border-radius: 12px; margin: 10px 0; text-align: center; font-weight: bold; }
         .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; padding: 10px; }
-        .modal-content { background: white; border-radius: 20px; padding: 20px; max-width: 100%; max-height: 90%; overflow-y: auto; width: 360px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .modal-content { background: white; border-radius: 20px; padding: 20px; max-width: 100%; max-height: 90%; overflow-y: auto; width: 360px; }
         .alert-item { background: #e8f5e9; color: #2e7d32; padding: 12px; border-radius: 12px; margin-bottom: 8px; border-left: 4px solid #2e7d32; }
         .alert-warning { border-left-color: #ffc107; background: #fff3cd; color: #664d03; }
         .alert-danger { border-left-color: #dc3545; background: #f8d7da; color: #842029; }
-        .detalhe-bloco { margin-bottom: 12px; font-size: 14px; color: #333; line-height: 1.4; }
+        .detalhe-bloco { margin-bottom: 12px; font-size: 14px; }
         .secao-titulo { border-top: 2px dashed #667eea; margin-top: 20px; padding-top: 15px; color: #667eea; font-size: 1.1em; }
         .filter-box { background: #f1f3f9; padding: 12px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid #667eea; }
+        .arquivo-preview { display: flex; align-items: center; gap: 10px; background: #f5f5f5; padding: 8px; border-radius: 8px; margin-bottom: 6px; }
+        .arquivo-preview img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; cursor: pointer; }
+        .arquivo-preview a { color: #667eea; text-decoration: none; flex: 1; word-break: break-all; font-size: 12px; cursor: pointer; }
+        .form-cadastro { background: #f8f9fa; padding: 15px; border-radius: 16px; margin-bottom: 20px; border: 1px solid #e0e0e0; }
+        .form-cadastro h3 { color: #667eea; margin-bottom: 15px; font-size: 1.1em; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚗 Gestor de Frota <span>Mobile</span></h1>
+            <h1>🚗 Gestor de Frota <span>Offline</span></h1>
             <div class="status-bar" id="statusBar">✅ Sistema pronto</div>
         </div>
 
@@ -70,7 +70,6 @@
             <button class="tab-btn" data-action="mudarTab" data-tab="despesas">💰 Despesas</button>
             <button class="tab-btn" data-action="mudarTab" data-tab="alertas">⚠️ Alertas</button>
             <button class="tab-btn" data-action="mudarTab" data-tab="backup">💾 Backup</button>
-            <button class="tab-btn" data-action="mudarTab" data-tab="config">⚙️ Config.</button>
         </div>
 
         <div id="dashboard" class="tab-content active">
@@ -78,7 +77,7 @@
             <h3>🛡️ Resumo de Seguros</h3>
             <div class="table-container">
                 <table id="tabelaDashboardSeguros">
-                    <thead><tr><th>Veículo</th><th>Apólice</th><th>Franquia</th><th>Contatos (Emergência / Despachante)</th><th>CPF Segurado</th></tr></thead>
+                    <thead><tr><th>Veículo</th><th>Apólice</th><th>Franquia</th><th>Contatos</th><th>CPF</th></tr></thead>
                     <tbody></tbody>
                 </table>
             </div>
@@ -88,7 +87,7 @@
             <h3>🚗 Veículos Cadastrados</h3>
             <div class="table-container">
                 <table id="tabelaVeiculos">
-                    <thead><tr><th>Placa</th><th>Veículo</th><th>Ano</th><th>Local Compra</th><th>Ações</th></tr></thead>
+                    <thead><tr><th>Placa</th><th>Veículo</th><th>Ano</th><th>Local</th><th>Ações</th></tr></thead>
                     <tbody></tbody>
                 </table>
             </div>
@@ -99,203 +98,130 @@
             <div class="form-group"><label>Ano*</label><input type="number" id="vAno" placeholder="2020"></div>
             <div class="form-group"><label>Cor</label><input type="text" id="vCor" placeholder="Prata"></div>
             <div class="form-group"><label>Placa*</label><input type="text" id="vPlaca" placeholder="ABC1D23"></div>
-            <div class="form-group"><label>Número do Chassi</label><input type="text" id="vChassi" placeholder="Ex: 9BW..."></div>
-            <div class="form-group"><label>Renavam</label><input type="text" id="vRenavam" placeholder="Renavam"></div>
-            <div class="form-group"><label>Data da Compra</label><input type="date" id="vDataCompra"></div>
-            <div class="form-group"><label>Valor Compra</label><input type="number" id="vValor" placeholder="R$"></div>
-            <div class="form-group"><label>Local da Compra / Concessionária</label><input type="text" id="vLocal" placeholder="Ex: Concessionária VW"></div>
+            <div class="form-group"><label>Chassi</label><input type="text" id="vChassi"></div>
+            <div class="form-group"><label>Renavam</label><input type="text" id="vRenavam"></div>
+            <div class="form-group"><label>Data Compra</label><input type="date" id="vDataCompra"></div>
+            <div class="form-group"><label>Valor Compra (R$)</label><input type="number" step="0.01" id="vValor"></div>
+            <div class="form-group"><label>Local Compra</label><input type="text" id="vLocal"></div>
             
             <div class="form-group">
-                <label>📄 Anexar Documentos (Fotos ou PDFs)</label>
-                <input type="file" id="vDocumento" accept="image/*,application/pdf" data-action="processarArquivoDrive">
+                <label>📄 Anexar Documentos</label>
+                <input type="file" id="vDocumento" accept="image/*,application/pdf">
                 <div id="listaArquivosForm" style="margin-top: 10px;"></div>
             </div>
 
             <div class="button-group">
                 <button data-action="salvarVeiculo" id="btnSalvarVeiculo">➕ Adicionar</button>
-                <button data-action="limparVeiculoForm" class="secondary">🧹 Limpar</button>
+                <button data-action="limparVeiculo" class="secondary">🧹 Limpar</button>
             </div>
         </div>
 
         <div id="seguros" class="tab-content">
-            <h3>🛡️ Seguros Cadastrados</h3>
+            <h3>🛡️ Seguros</h3>
             <div class="filter-box">
-                <label>🔍 Escolha o veículo para apresentar os Seguros:</label>
-                <select id="filtroSegVeiculo" data-action="filtrarTabelaSeguros"></select>
+                <select id="filtroSegVeiculo" data-action="filtrarSeguros"><option value="0">⭐ Todos</option></select>
             </div>
             <div class="table-container">
-                <table id="tabelaSeguros">
-                    <thead><tr><th>Veículo</th><th>Seguradora</th><th>Apólice</th><th>Franquia</th><th>Ações</th></tr></thead>
-                    <tbody></tbody>
-                </table>
+                <table id="tabelaSeguros"><thead><tr><th>Veículo</th><th>Seguradora</th><th>Apólice</th><th>Franquia</th><th>Ações</th></tr></thead><tbody></tbody></table>
             </div>
-
-            <h3 class="secao-titulo">Registrar Seguro</h3>
-            <div class="form-group"><label>Veículo*</label><select id="segVeiculo"></select></div>
-            <div class="form-group"><label>Seguradora*</label><input type="text" id="segSeguradora" placeholder="Ex: Porto Seguro"></div>
-            <div class="form-group"><label>Número da Apólice*</label><input type="text" id="segApolice" placeholder="Ex: 123456789"></div>
-            <div class="form-group"><label>Valor Pago do Seguro (R$)*</label><input type="number" step="0.01" id="segValorPago" placeholder="0.00"></div>
-            <div class="form-group"><label>Valor da Franquia (R$)</label><input type="number" step="0.01" id="segValorFranquia" placeholder="0.00"></div>
-            <div class="form-group"><label>Contato de Emergência da Seguradora</label><input type="text" id="segContatoEmergencia" placeholder="Ex: 0800 123 456"></div>
-            <div class="form-group"><label>Nome do Despachante / Corretor</label><input type="text" id="segDespNome" placeholder="Ex: João Corretora"></div>
-            <div class="form-group"><label>Contato do Despachante</label><input type="text" id="segDespContato" placeholder="Ex: (11) 99999-9999"></div>
-            <div class="form-group"><label>CPF da Pessoa Segurada</label><input type="text" id="segCpf" placeholder="000.000.000-00"></div>
-            <div class="button-group">
-                <button data-action="salvarSeguro" id="btnSalvarSeguro">➕ Registrar</button>
-                <button data-action="limparSeguroForm" class="secondary">🧹 Limpar</button>
-            </div>
+            <h3>Registrar Seguro</h3>
+            <div class="form-group"><select id="segVeiculo"></select></div>
+            <div class="form-group"><input type="text" id="segSeguradora" placeholder="Seguradora"></div>
+            <div class="form-group"><input type="text" id="segApolice" placeholder="Apólice"></div>
+            <div class="form-group"><input type="number" step="0.01" id="segValorPago" placeholder="Valor Pago"></div>
+            <div class="form-group"><input type="number" step="0.01" id="segValorFranquia" placeholder="Franquia"></div>
+            <div class="form-group"><input type="text" id="segContatoEmergencia" placeholder="Contato Emergência"></div>
+            <div class="form-group"><input type="text" id="segDespNome" placeholder="Despachante"></div>
+            <div class="form-group"><input type="text" id="segDespContato" placeholder="Contato Despachante"></div>
+            <div class="form-group"><input type="text" id="segCpf" placeholder="CPF"></div>
+            <button data-action="salvarSeguro">➕ Registrar</button>
         </div>
 
         <div id="pecas" class="tab-content">
+            <div class="form-cadastro">
+                <h3>➕ Cadastrar Nova Peça</h3>
+                <div class="form-group"><select id="pVeiculoId"><option value="0">⚙️ Geral (qualquer veículo)</option></select></div>
+                <div class="form-group"><input type="text" id="pNome" placeholder="Nome da Peça *"></div>
+                <div class="form-group"><input type="text" id="pMarca" placeholder="Marca"></div>
+                <div class="form-group"><input type="number" step="0.01" id="pPreco" placeholder="Preço *"></div>
+                <div class="form-group"><input type="text" id="pLocal" placeholder="Fornecedor / Local da Compra"></div>
+                <div class="button-group">
+                    <button data-action="salvarPeca" id="btnSalvarPeca">💾 Salvar Peça</button>
+                    <button data-action="limparPeca" class="secondary">🧹 Limpar</button>
+                </div>
+            </div>
+
             <h3>🔧 Peças Cadastradas</h3>
             <div class="filter-box">
-                <label>🔍 Escolha o veículo para apresentar as Peças:</label>
-                <select id="filtroPecasVeiculo" data-action="filtrarTabelaPecas"></select>
+                <select id="filtroPecasVeiculo" data-action="filtrarPecas"><option value="0">⭐ Todos os Veículos</option></select>
             </div>
             <div class="table-container">
                 <table id="tabelaPecas">
-                    <thead><tr><th>Nome</th><th>Compatibilidade</th><th>Fornecedor</th><th>Preço</th><th>Ações</th></tr></thead>
+                    <thead><tr><th>Nome</th><th>Compatível</th><th>Fornecedor</th><th>Preço</th><th>Ações</th></tr></thead>
                     <tbody></tbody>
                 </table>
-            </div>
-
-            <h3 class="secao-titulo">Formulário de Peças</h3>
-            <div class="form-group"><label>Pertence ao Veículo / Compatibilidade*</label><select id="pVeiculoId"></select></div>
-            <div class="form-group"><label>Nome da Peça*</label><input type="text" id="pNome" placeholder="Ex: Óleo do motor 5W30"></div>
-            <div class="form-group"><label>Marca</label><input type="text" id="pMarca" placeholder="Shell"></div>
-            <div class="form-group"><label>Preço*</label><input type="number" step="0.01" id="pPreco" placeholder="R$"></div>
-            <div class="form-group"><label>Local da Compra / Fornecedor</label><input type="text" id="pLocal" placeholder="Ex: Auto Peças XYZ"></div>
-            <div class="button-group">
-                <button data-action="salvarPeca" id="btnSalvarPeca">➕ Adicionar</button>
-                <button data-action="limparPecaForm" class="secondary">🧹 Limpar</button>
             </div>
         </div>
 
         <div id="abastecimentos" class="tab-content">
-            <h3>⛽ Histórico de Abastecimentos</h3>
-            <div class="filter-box">
-                <label>🔍 Escolha o veículo para apresentar os Abastecimentos:</label>
-                <select id="filtroAbastVeiculo" data-action="filtrarTabelaAbast"></select>
-            </div>
-            <div class="table-container">
-                <table id="tabelaAbastecimentos">
-                    <thead><tr><th>Data</th><th>Veículo</th><th>Posto</th><th>Litros</th><th>Total</th><th>KM</th><th>KM/L</th><th>Ações</th></tr></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-
-            <h3 class="secao-titulo">Registrar Abastecimento</h3>
-            <div class="form-group"><label>Veículo</label><select id="abVeiculo"></select></div>
-            <div class="form-group"><label>Data</label><input type="date" id="abData"></div>
-            <div class="form-group"><label>Tipo</label><select id="abTipo"><option>Diesel S10</option><option>Diesel Comum</option><option>Álcool</option><option>Gasolina Comum</option><option>Podium</option></select></div>
-            <div class="form-group"><label>Litros</label><input type="number" step="0.01" id="abLitros"></div>
-            <div class="form-group"><label>R$/Litro</label><input type="number" step="0.001" id="abPreco"></div>
-            <div class="form-group"><label>KM</label><input type="number" id="abKm"></div>
-            <div class="form-group"><label>Local / Posto</label><input type="text" id="abLocal" placeholder="Ex: Posto Ipiranga"></div>
-            <div class="button-group">
-                <button data-action="salvarAbastecimento" id="btnSalvarAbastecimento">⛽ Registrar</button>
-                <button data-action="limparAbastecimentoForm" class="secondary">🧹 Limpar</button>
-            </div>
+            <h3>⛽ Abastecimentos</h3>
+            <div class="filter-box"><select id="filtroAbastVeiculo" data-action="filtrarAbastecimentos"><option value="0">⭐ Todos</option></select></div>
+            <div class="table-container"><table id="tabelaAbastecimentos"><thead><tr><th>Data</th><th>Veículo</th><th>Posto</th><th>Litros</th><th>Total</th><th>KM</th><th>Ações</th></tr></thead><tbody></tbody></table></div>
+            <h3>Registrar</h3>
+            <div class="form-group"><select id="abVeiculo"></select></div>
+            <div class="form-group"><input type="date" id="abData"></div>
+            <div class="form-group"><input type="number" step="0.01" id="abLitros" placeholder="Litros"></div>
+            <div class="form-group"><input type="number" step="0.001" id="abPreco" placeholder="Preço/L"></div>
+            <div class="form-group"><input type="number" id="abKm" placeholder="KM"></div>
+            <div class="form-group"><input type="text" id="abLocal" placeholder="Posto"></div>
+            <button data-action="salvarAbastecimento">⛽ Registrar</button>
         </div>
 
         <div id="revisoes" class="tab-content">
-            <h3>🔩 Histórico de Revisões</h3>
-            <div class="filter-box">
-                <label>🔍 Escolha o veículo para apresentar as Revisões:</label>
-                <select id="filtroRevVeiculo" data-action="filtrarTabelaRev"></select>
-            </div>
-            <div class="table-container">
-                <table id="tabelaRevisoes">
-                    <thead><tr><th>Data</th><th>Veículo</th><th>Oficina</th><th>KM</th><th>Total</th><th>Ações</th></tr></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-
-            <h3 class="secao-titulo">Registrar Nova Revisão</h3>
-            <div class="form-group"><label>Veículo</label><select id="revVeiculo" data-action="atualizarPecasContextuaisRev"></select></div>
-            <div class="form-group"><label>Data</label><input type="date" id="revData"></div>
-            <div class="form-group"><label>KM</label><input type="number" id="revKm"></div>
-            <div class="form-group"><label>Custo Mão Obra</label><input type="number" id="revCustoMao"></div>
-            <div class="form-group"><label>Próxima KM</label><input type="number" id="revProxKm"></div>
-            <div class="form-group"><label>Próxima Data (Estimada +1 Ano)</label><input type="text" id="revProxData" readonly></div>
-            <div class="form-group"><label>Oficina / Local</label><input type="text" id="revLocal" placeholder="Ex: Oficina Central"></div>
-            <div class="form-group">
-                <label>Adicionar Peça (Apenas Peças Compatíveis do Veículo)</label>
-                <div style="display:flex; gap:8px;">
-                    <select id="revPeca" style="flex:2"></select>
-                    <input type="number" id="revQtd" placeholder="Qtd" style="flex:1" value="1" min="1">
-                    <button data-action="adicionarPecaRevisao" class="small">➕</button>
-                </div>
-            </div>
+            <h3>🔩 Revisões</h3>
+            <div class="filter-box"><select id="filtroRevVeiculo" data-action="filtrarRevisoes"><option value="0">⭐ Todos</option></select></div>
+            <div class="table-container"><table id="tabelaRevisoes"><thead><tr><th>Data</th><th>Veículo</th><th>Oficina</th><th>KM</th><th>Total</th><th>Ações</th></tr></thead><tbody></tbody></table></div>
+            <h3>Nova Revisão</h3>
+            <div class="form-group"><select id="revVeiculo" data-action="atualizarPecasRev"></select></div>
+            <div class="form-group"><input type="date" id="revData"></div>
+            <div class="form-group"><input type="number" id="revKm" placeholder="KM"></div>
+            <div class="form-group"><input type="number" step="0.01" id="revCustoMao" placeholder="Mão de Obra"></div>
+            <div class="form-group"><input type="number" id="revProxKm" placeholder="Próx. KM"></div>
+            <div class="form-group"><input type="text" id="revLocal" placeholder="Oficina"></div>
+            <div class="form-group"><div style="display:flex;gap:5px"><select id="revPeca" style="flex:2"></select><input type="number" step="0.01" id="revQtd" value="1" style="flex:1"><button data-action="addPecaRev" class="small">➕</button></div></div>
             <div id="listaPecasRev"></div>
             <div class="total-container" id="totalRev">Total: R$ 0,00</div>
-            <div class="button-group">
-                <button data-action="salvarRevisao" id="btnSalvarRevisao">🔧 Registrar</button>
-                <button data-action="limparRevisaoForm" class="secondary">🧹 Limpar</button>
-            </div>
+            <button data-action="salvarRevisao">🔧 Salvar</button>
         </div>
 
         <div id="reparos" class="tab-content">
-            <h3>🛠️ Histórico de Reparos</h3>
-            <div class="filter-box">
-                <label>🔍 Escolha o veículo para apresentar os Reparos:</label>
-                <select id="filtroRepVeiculo" data-action="filtrarTabelaRep"></select>
-            </div>
-            <div class="table-container">
-                <table id="tabelaReparos">
-                    <thead><tr><th>Data</th><th>Veículo</th><th>Tipo</th><th>Oficina</th><th>Total</th><th>Ações</th></tr></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-
-            <h3 class="secao-titulo">Registrar Novo Reparo</h3>
-            <div class="form-group"><label>Veículo</label><select id="repVeiculo" data-action="atualizarPecasContextuaisRep"></select></div>
-            <div class="form-group"><label>Tipo de Reparo</label><select id="repTipo"><option>Manutenção Corretiva</option><option>Lanterna/Pintura</option><option>Elétrica</option><option>Mecânica</option><option>Outro</option></select></div>
-            <div class="form-group"><label>Custo Mão Obra/Serviço</label><input type="number" id="repCusto"></div>
-            <div class="form-group"><label>Descrição</label><input type="text" id="repDescricao"></div>
-            <div class="form-group"><label>Oficina / Local</label><input type="text" id="repLocal" placeholder="Ex: Auto Elétrica Silva"></div>
-            
-            <div class="form-group">
-                <label>Adicionar Peça Utilizada (Apenas Peças Compatíveis do Veículo)</label>
-                <div style="display:flex; gap:8px;">
-                    <select id="repPeca" style="flex:2"></select>
-                    <input type="number" id="repQtd" placeholder="Qtd" style="flex:1" value="1" min="1">
-                    <button data-action="adicionarPecaReparo" class="small">➕</button>
-                </div>
-            </div>
+            <h3>🛠️ Reparos</h3>
+            <div class="filter-box"><select id="filtroRepVeiculo" data-action="filtrarReparos"><option value="0">⭐ Todos</option></select></div>
+            <div class="table-container"><table id="tabelaReparos"><thead><tr><th>Data</th><th>Veículo</th><th>Tipo</th><th>Oficina</th><th>Total</th><th>Ações</th></tr></thead><tbody></tbody></table></div>
+            <h3>Novo Reparo</h3>
+            <div class="form-group"><select id="repVeiculo" data-action="atualizarPecasRep"></select></div>
+            <div class="form-group"><select id="repTipo"><option>Mecânica</option><option>Elétrica</option><option>Pintura</option></select></div>
+            <div class="form-group"><input type="number" step="0.01" id="repCusto" placeholder="Custo Serviço"></div>
+            <div class="form-group"><input type="text" id="repDescricao" placeholder="Descrição"></div>
+            <div class="form-group"><input type="text" id="repLocal" placeholder="Oficina"></div>
+            <div class="form-group"><div style="display:flex;gap:5px"><select id="repPeca" style="flex:2"></select><input type="number" step="0.01" id="repQtd" value="1" style="flex:1"><button data-action="addPecaRep" class="small">➕</button></div></div>
             <div id="listaPecasRep"></div>
             <div class="total-container" id="totalRep">Total: R$ 0,00</div>
-
-            <div class="button-group">
-                <button data-action="salvarReparo" id="btnSalvarReparo">📋 Registrar</button>
-                <button data-action="limparReparoForm" class="secondary">🧹 Limpar</button>
-            </div>
+            <button data-action="salvarReparo">📋 Salvar</button>
         </div>
 
         <div id="despesas" class="tab-content">
-            <h3>💰 Histórico de Taxas / Despesas</h3>
-            <div class="filter-box">
-                <label>🔍 Escolha o veículo para apresentar as Despesas:</label>
-                <select id="filtroDesVeiculo" data-action="filtrarTabelaDes"></select>
-            </div>
-            <div class="table-container">
-                <table id="tabelaDespesas">
-                    <thead><tr><th>Data</th><th>Veículo</th><th>Tipo</th><th>Órgão/Emissor</th><th>Valor</th><th>Ações</th></tr></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-
-            <h3 class="secao-titulo">Registrar Taxa / Despesa Extra</h3>
-            <div class="form-group"><label>Veículo</label><select id="desVeiculo"></select></div>
-            <div class="form-group"><label>Data</label><input type="date" id="desData"></div>
-            <div class="form-group"><label>Tipo de Despesa</label><select id="desTipo"><option>IPVA</option><option>Licenciamento</option><option>Multa</option><option>Seguro Obrigatório</option><option>Outros</option></select></div>
-            <div class="form-group"><label>Valor (R$)*</label><input type="number" step="0.01" id="desValor" placeholder="0,00"></div>
-            <div class="form-group"><label>Observações/Descrição</label><input type="text" id="desObservacao" placeholder="Ex: Multa de velocidade BR-101"></div>
-            <div class="form-group"><label>Local / Órgão / Emissor</label><input type="text" id="desLocal" placeholder="Ex: Detran"></div>
-            <div class="button-group">
-                <button data-action="salvarDespesa" id="btnSalvarDespesa">💰 Registrar</button>
-                <button data-action="limparDespesaForm" class="secondary">🧹 Limpar</button>
-            </div>
+            <h3>💰 Despesas</h3>
+            <div class="filter-box"><select id="filtroDesVeiculo" data-action="filtrarDespesas"><option value="0">⭐ Todos</option></select></div>
+            <div class="table-container"><table id="tabelaDespesas"><thead><tr><th>Data</th><th>Veículo</th><th>Tipo</th><th>Local</th><th>Valor</th><th>Ações</th></tr></thead><tbody></tbody></table></div>
+            <h3>Nova Despesa</h3>
+            <div class="form-group"><select id="desVeiculo"></select></div>
+            <div class="form-group"><input type="date" id="desData"></div>
+            <div class="form-group"><select id="desTipo"><option>IPVA</option><option>Licenciamento</option><option>Multa</option></select></div>
+            <div class="form-group"><input type="number" step="0.01" id="desValor" placeholder="Valor"></div>
+            <div class="form-group"><input type="text" id="desObservacao" placeholder="Obs"></div>
+            <div class="form-group"><input type="text" id="desLocal" placeholder="Órgão"></div>
+            <button data-action="salvarDespesa">💰 Registrar</button>
         </div>
 
         <div id="alertas" class="tab-content"><div id="alertasLista"></div></div>
@@ -305,10 +231,10 @@
                 <h3>💾 Backup</h3>
                 <div class="button-group" style="justify-content:center">
                     <button data-action="exportarDados">📤 Exportar</button>
-                    <button data-action="acionarImportador">📥 Importar</button>
-                    <button data-action="limparDadosTodos" class="danger">⚠️ Limpar Tudo</button>
+                    <button data-action="importarDados">📥 Importar</button>
+                    <button data-action="limparTudo" class="danger">⚠️ Limpar Tudo</button>
                 </div>
-                <div style="margin-top:20px; text-align: left; max-width: 200px; margin-left: auto; margin-right: auto;">
+                <div style="margin-top:20px">
                     <p>Veículos: <strong id="statVeiculos">0</strong></p>
                     <p>Seguros: <strong id="statSeguros">0</strong></p>
                     <p>Peças: <strong id="statPecas">0</strong></p>
@@ -319,73 +245,32 @@
                 </div>
             </div>
         </div>
-
-        <div id="config" class="tab-content">
-            <div style="text-align:center">
-                <h3>⚙️ Configurações do Google Drive</h3>
-                <p style="font-size: 13px; color: #555; margin-bottom: 15px; max-width:400px; margin-left:auto; margin-right:auto;">
-                    Cole abaixo a URL do seu Google Apps Script (Web App) para habilitar múltiplos anexos por veículo diretamente na sua conta do Drive.
-                </p>
-            </div>
-            <div class="form-group">
-                <label>URL do Web App (Google Apps Script)*</label>
-                <input type="text" id="configUrlDrive" placeholder="https://script.google.com/macros/s/.../exec">
-            </div>
-            <div class="button-group" style="justify-content:center">
-                <button data-action="salvarConfig">💾 Salvar Configurações</button>
-            </div>
-        </div>
     </div>
 
-    <div id="modalPecas" class="modal">
-        <div class="modal-content">
-            <h3>Peças Utilizadas</h3>
-            <div id="modalLista"></div>
-            <button data-action="fecharModalPecas" style="margin-top:15px; width:100%">Fechar</button>
-        </div>
-    </div>
-
-    <div id="modalReparos" class="modal">
-        <div class="modal-content">
-            <h3>Detalhes do Reparo</h3>
-            <div id="modalRepConteudo" style="margin-top:10px;"></div>
-            <button data-action="fecharModalReparos" style="margin-top:15px; width:100%">Fechar</button>
-        </div>
-    </div>
-
-    <div id="modalVeiculoDetalhes" class="modal">
-        <div class="modal-content">
-            <h3>Ficha do Veículo</h3>
-            <div id="modalVeicConteudo" style="margin-top:10px;"></div>
-            <button data-action="fecharModalVeiculo" style="margin-top:15px; width:100%">Fechar</button>
-        </div>
-    </div>
+    <div id="modalPecas" class="modal"><div class="modal-content"><h3>Peças</h3><div id="modalLista"></div><button data-action="fecharModalPecas">Fechar</button></div></div>
+    <div id="modalReparos" class="modal"><div class="modal-content"><h3>Detalhes</h3><div id="modalRepConteudo"></div><button data-action="fecharModalReparos">Fechar</button></div></div>
+    <div id="modalVeiculoDetalhes" class="modal"><div class="modal-content"><h3>Detalhes do Veículo</h3><div id="modalVeicConteudo"></div><button data-action="fecharModalVeiculo">Fechar</button></div></div>
 
     <script>
         (function(){
-            // DATA STORAGE
-            let dados = { veiculos: [], seguros: [], pecas: [], abastecimentos: [], revisoes: [], revisaoPecas: [], reparos: [], reparoPecas: [], despesas: [] };
+            // ========== DADOS ==========
+            let dados = { 
+                veiculos: [], seguros: [], pecas: [], abastecimentos: [], 
+                revisoes: [], revisaoPecas: [], reparos: [], reparoPecas: [], despesas: [] 
+            };
             let ids = { veiculos: 1, seguros: 1, pecas: 1, abastecimentos: 1, revisoes: 1, reparos: 1, despesas: 1 };
             
-            let editandoVeiculoId = null;
-            let editandoSeguroId = null;
-            let editandoPecaId = null;
-            let editandoAbastId = null;
-            let editandoRevisaoId = null;
-            let editandoReparoId = null;
-            let editandoDespesaId = null;
-            
-            let listaPecasTemp = [];
+            let editando = { veiculo: null, seguro: null, peca: null, abast: null, revisao: null, reparo: null, despesa: null };
+            let listaPecasRevTemp = [];
             let listaPecasRepTemp = [];
             let listaArquivosTemp = [];
-            let urlServidorDrive = localStorage.getItem('urlServidorDrive') || '';
 
-            const formatarMoeda = (valor) => (valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-            const statusBar = document.getElementById('statusBar');
+            const formatarMoeda = (v) => (v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            
             function atualizarStatus(msg) { 
-                if(statusBar) statusBar.innerHTML = `✅ ${msg}`; 
-                setTimeout(() => { if(statusBar) statusBar.innerHTML = '✅ Sistema pronto'; }, 2000); 
+                const sb = document.getElementById('statusBar');
+                if(sb) sb.innerHTML = `✅ ${msg}`; 
+                setTimeout(() => { if(sb) sb.innerHTML = '✅ Sistema pronto'; }, 2000); 
             }
 
             function salvar() { 
@@ -405,8 +290,9 @@
                                 ids[k] = Math.max(...dados[k].map(i => Number(i.id) || 0)) + 1;
                             }
                         }
-                    } catch(e) { console.error("Erro ao carregar dados", e); }
+                    } catch(e) { console.error(e); }
                 }
+                
                 if(!dados.seguros) dados.seguros = [];
                 if(!dados.revisaoPecas) dados.revisaoPecas = [];
                 if(!dados.reparoPecas) dados.reparoPecas = [];
@@ -414,996 +300,1083 @@
                 if(!dados.despesas) dados.despesas = [];
                 
                 if(dados.veiculos.length === 0) { 
-                    dados.veiculos = [{ id:1, marca:"Volkswagen", modelo:"Gol", ano:2020, cor:"Prata", placa:"ABC-1234", chassi:"9BW...", dataCompra:"", valorCompra:45000, renavam:"123456789", local:"Concessionária", arquivos: [] }]; 
-                    dados.pecas = [{ id:1, veiculoId: 0, nome:"Óleo do Motor Geral", marca:"Shell", preco:45.90, local:"Auto Peças" }]; 
+                    dados.veiculos = [{ 
+                        id:1, marca:"Volkswagen", modelo:"Gol", ano:2020, cor:"Prata", 
+                        placa:"ABC-1234", chassi:"9BW123456", dataCompra:"2020-01-15", 
+                        valorCompra:45000, renavam:"123456789", local:"Concessionária", arquivos:[] 
+                    }]; 
+                    dados.pecas = [{ id:1, veiculoId:0, nome:"Óleo do Motor", marca:"Shell", preco:45.90, local:"Auto Peças" }]; 
                     ids.veiculos = 2; ids.pecas = 2; 
                     salvar(); 
                 }
-
-                // CORREÇÃO: Garante que os IDs antigos salvos como strings sejam convertidos para números
-                ['pecas', 'veiculos', 'revisoes', 'reparos', 'seguros', 'abastecimentos', 'despesas'].forEach(chave => {
-                    if(dados[chave]) {
-                        dados[chave].forEach(item => { item.id = Number(item.id); });
-                    }
-                });
-
-                const inputUrl = document.getElementById('configUrlDrive');
-                if(inputUrl) inputUrl.value = urlServidorDrive;
             }
 
             function renderTudo() {
-                renderVeiculos(); renderSeguros(); renderPecas(); renderAbastecimentos(); renderRevisoes(); renderReparos(); renderDespesas();
-                atualizarDashboard(); carregarAlertas(); atualizarCombos(); atualizarEstatisticas();
+                renderVeiculos();
+                renderSeguros();
+                renderPecas();
+                renderAbastecimentos();
+                renderRevisoes();
+                renderReparos();
+                renderDespesas();
+                atualizarCombos();
+                atualizarDashboard();
+                carregarAlertas();
+                atualizarEstatisticas();
             }
 
-            // MÓDULO: VEÍCULOS
+            // ========== VEÍCULOS ==========
             function renderVeiculos() {
-                const tbody = document.querySelector('#tabelaVeiculos tbody'); if(!tbody) return;
+                const tbody = document.querySelector('#tabelaVeiculos tbody');
+                if(!tbody) return;
+                if(dados.veiculos.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">Nenhum veículo</td></tr>';
+                    return;
+                }
                 tbody.innerHTML = dados.veiculos.map(v => `
                     <tr>
-                        <td><strong>${v.placa}</strong></td><td>${v.marca} ${v.modelo}</td><td>${v.ano}</td><td>${v.local || '-'}</td>
+                        <td><strong>${v.placa}</strong></td>
+                        <td>${v.marca} ${v.modelo}</td>
+                        <td>${v.ano}</td>
+                        <td>${v.local || '-'}</td>
                         <td>
-                            <button class="small" data-action="verDetalhesVeiculo" data-id="${v.id}">🔍</button>
-                            <button class="small" data-action="editVeiculo" data-id="${v.id}">✏️</button> 
-                            <button class="danger small" data-action="delVeiculo" data-id="${v.id}">🗑️</button>
+                            <button class="small" data-action="verVeiculo" data-id="${v.id}">🔍</button>
+                            <button class="small" data-action="editarVeiculo" data-id="${v.id}">✏️</button>
+                            <button class="danger small" data-action="excluirVeiculo" data-id="${v.id}">🗑️</button>
                         </td>
-                    </tr>`).join('');
+                    </tr>
+                `).join('');
             }
 
             function renderListaArquivosForm() {
                 const container = document.getElementById('listaArquivosForm');
                 if(!container) return;
+                if(listaArquivosTemp.length === 0) {
+                    container.innerHTML = '<p style="color:#999">Nenhum arquivo selecionado</p>';
+                    return;
+                }
                 container.innerHTML = listaArquivosTemp.map((arq, idx) => `
-                    <div style="display:flex; justify-content:space-between; align-items:center; background:#f0f0f0; padding:6px 10px; border-radius:8px; margin-bottom:5px; font-size:12px;">
-                        <span style="word-break:break-all; flex:1; margin-right:5px; color:#333;">📄 ${arq.nome}</span>
-                        <button type="button" class="danger small" data-action="removerArquivoTemp" data-idx="${idx}" style="padding:2px 6px; margin:0; font-size:11px;">🗑️</button>
+                    <div class="arquivo-preview">
+                        ${arq.tipo && arq.tipo.startsWith('image/') ? `<img src="${arq.base64}" onclick="window.open('${arq.base64}', '_blank')">` : '<span>📄</span>'}
+                        <a href="#" onclick="window.open('${arq.base64}', '_blank'); return false;">${arq.nome}</a>
+                        <button class="danger small" data-action="removerArquivoTemp" data-idx="${idx}">🗑️</button>
                     </div>
                 `).join('');
             }
 
-            function verDetalhesVeiculo(id) {
-                const v = dados.veiculos.find(ve => ve.id === id); if(!v) return;
-                const container = document.getElementById('modalVeicConteudo'); if(!container) return;
+            function arquivoParaBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
 
+            async function processarArquivo(file) {
+                if(!file) return;
+                const base64 = await arquivoParaBase64(file);
+                listaArquivosTemp.push({
+                    id: Date.now() + Math.random(),
+                    nome: file.name,
+                    tipo: file.type,
+                    base64: base64
+                });
+                renderListaArquivosForm();
+                atualizarStatus(`Arquivo "${file.name}" adicionado`);
+            }
+
+            function salvarVeiculo() {
+                const marca = document.getElementById('vMarca')?.value.trim();
+                const modelo = document.getElementById('vModelo')?.value.trim();
+                const ano = parseInt(document.getElementById('vAno')?.value);
+                const placa = document.getElementById('vPlaca')?.value.trim().toUpperCase();
+                
+                if(!marca || !modelo || !ano || !placa) {
+                    alert("Preencha marca, modelo, ano e placa!");
+                    return;
+                }
+                
+                const veiculo = {
+                    marca, modelo, ano,
+                    cor: document.getElementById('vCor')?.value.trim() || '',
+                    placa: placa,
+                    chassi: document.getElementById('vChassi')?.value.trim() || '',
+                    dataCompra: document.getElementById('vDataCompra')?.value || '',
+                    valorCompra: parseFloat(document.getElementById('vValor')?.value) || 0,
+                    renavam: document.getElementById('vRenavam')?.value.trim() || '',
+                    local: document.getElementById('vLocal')?.value.trim() || '',
+                    arquivos: [...listaArquivosTemp]
+                };
+                
+                if(editando.veiculo) {
+                    const idx = dados.veiculos.findIndex(v => v.id === editando.veiculo);
+                    if(idx !== -1) dados.veiculos[idx] = { id: editando.veiculo, ...veiculo };
+                    editando.veiculo = null;
+                    document.getElementById('btnSalvarVeiculo').innerHTML = '➕ Adicionar';
+                } else {
+                    veiculo.id = ids.veiculos++;
+                    dados.veiculos.push(veiculo);
+                }
+                
+                salvar();
+                renderVeiculos();
+                atualizarCombos();
+                limparVeiculo();
+                atualizarStatus("Veículo salvo!");
+            }
+
+            function editarVeiculo(id) {
+                const v = dados.veiculos.find(v => v.id === id);
+                if(!v) return;
+                
+                document.getElementById('vMarca').value = v.marca;
+                document.getElementById('vModelo').value = v.modelo;
+                document.getElementById('vAno').value = v.ano;
+                document.getElementById('vCor').value = v.cor || '';
+                document.getElementById('vPlaca').value = v.placa;
+                document.getElementById('vChassi').value = v.chassi || '';
+                document.getElementById('vDataCompra').value = v.dataCompra || '';
+                document.getElementById('vValor').value = v.valorCompra || '';
+                document.getElementById('vRenavam').value = v.renavam || '';
+                document.getElementById('vLocal').value = v.local || '';
+                
+                listaArquivosTemp = v.arquivos ? [...v.arquivos] : [];
+                renderListaArquivosForm();
+                
+                editando.veiculo = id;
+                document.getElementById('btnSalvarVeiculo').innerHTML = '✏️ Atualizar';
+                document.getElementById('veiculos').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            function verVeiculo(id) {
+                const v = dados.veiculos.find(v => v.id === id);
+                if(!v) return;
+                
                 const totalCombustivel = dados.abastecimentos.filter(a => a.veiculoId === id).reduce((s,a)=> s + (a.total||0),0);
                 const totalRevisoes = dados.revisoes.filter(r => r.veiculoId === id).reduce((s,r)=> s + (r.custoTotal||0),0);
-                const totalReparos = dados.reparos.filter(rep => rep.veiculoId === id).reduce((s,rep)=> s + (rep.custo||0),0);
+                const totalReparos = dados.reparos.filter(r => r.veiculoId === id).reduce((s,r)=> s + (r.custo||0),0);
                 const totalDespesas = dados.despesas.filter(d => d.veiculoId === id).reduce((s,d)=> s + (d.valor||0),0);
-                const totalSeguros = dados.seguros.filter(s => s.veiculoId === id).reduce((s, seg)=> s + (seg.valorPago||0),0);
-
+                const totalSeguros = dados.seguros.filter(s => s.veiculoId === id).reduce((s,seg)=> s + (seg.valorPago||0),0);
+                
                 let htmlArquivos = '';
-                if (v.arquivos && v.arquivos.length > 0) {
-                    htmlArquivos = '<h4 style="color:#764ba2; margin-bottom:8px; margin-top:10px;">📄 Documentos Anexados:</h4>' + 
-                    v.arquivos.map(arq => `
-                        <div style="display:flex; justify-content:space-between; align-items:center; background:#f5f5f5; padding:8px; border-radius:8px; margin-bottom:6px; font-size:13px;">
-                            <a href="${arq.url}" target="_blank" style="color:#667eea; text-decoration:none; font-weight:bold; word-break:break-all; flex:1; margin-right:8px;">🔗 ${arq.nome}</a>
-                            <button class="danger small" data-action="excluirArquivoObjeto" data-veiculo-id="${v.id}" data-arquivo-id="${arq.id}" style="padding:4px 8px; font-size:11px; margin:0;">🗑️</button>
+                if(v.arquivos && v.arquivos.length > 0) {
+                    htmlArquivos = '<h4>📄 Documentos:</h4>' + v.arquivos.map(arq => `
+                        <div class="arquivo-preview">
+                            ${arq.tipo && arq.tipo.startsWith('image/') ? `<img src="${arq.base64}" onclick="window.open('${arq.base64}', '_blank')">` : '<span>📄</span>'}
+                            <a href="#" onclick="window.open('${arq.base64}', '_blank'); return false;">${arq.nome}</a>
+                            <button class="danger small" data-action="excluirArquivo" data-veiculo-id="${v.id}" data-arquivo-id="${arq.id}">🗑️</button>
                         </div>
                     `).join('');
                 } else {
-                    htmlArquivos = '<h4 style="color:#764ba2; margin-bottom:8px; margin-top:10px;">📄 Documentos Anexados:</h4><p style="color:#999; font-size:13px;">Nenhum documento anexado.</p>';
+                    htmlArquivos = '<p>Nenhum documento</p>';
                 }
-
-                container.innerHTML = `
-                    <div class="detalhe-bloco"><strong>Placa:</strong> ${v.placa}</div>
-                    <div class="detalhe-bloco"><strong>Marca / Modelo:</strong> ${v.marca} ${v.modelo}</div>
-                    <div class="detalhe-bloco"><strong>Ano:</strong> ${v.ano}</div>
-                    <div class="detalhe-bloco"><strong>Cor:</strong> ${v.cor || 'Não informada'}</div>
-                    <div class="detalhe-bloco"><strong>Chassi:</strong> ${v.chassi || 'Não informado'}</div>
-                    <div class="detalhe-bloco"><strong>Renavam:</strong> ${v.renavam || 'Não informado'}</div>
-                    <div class="detalhe-bloco"><strong>Data da Compra:</strong> ${v.dataCompra ? v.dataCompra.split('-').reverse().join('/') : 'Não informada'}</div>
-                    <div class="detalhe-bloco"><strong>Local da Compra:</strong> ${v.local || 'Não informado'}</div>
-                    <div class="detalhe-bloco"><strong>Valor de Compra:</strong> ${formatarMoeda(v.valorCompra)}</div>
-                    
-                    <hr style="margin:10px 0; border:0; border-top:1px dashed #ddd;">
-                    ${htmlArquivos}
-                    
-                    <hr style="margin:10px 0; border:0; border-top:1px dashed #ddd;">
-                    <h4 style="color:#764ba2; margin-bottom:8px;">📊 Resumo Acumulado de Gastos:</h4>
-                    <div class="detalhe-bloco" style="font-size:13px;">🛡️ **Seguros:** ${formatarMoeda(totalSeguros)}</div>
-                    <div class="detalhe-bloco" style="font-size:13px;">⛽ **Combustível:** ${formatarMoeda(totalCombustivel)}</div>
-                    <div class="detalhe-bloco" style="font-size:13px;">🔩 **Revisões:** ${formatarMoeda(totalRevisoes)}</div>
-                    <div class="detalhe-bloco" style="font-size:13px;">🛠️ **Reparos:** ${formatarMoeda(totalReparos)}</div>
-                    <div class="detalhe-bloco" style="font-size:13px;">💰 **Taxas/Despesas:** ${formatarMoeda(totalDespesas)}</div>
-                    <div class="detalhe-bloco" style="font-size:15px; font-weight:bold; color:#2e7d32; text-align:right; margin-top:8px;">
-                        Gasto Total: ${formatarMoeda(totalCombustivel + totalRevisoes + totalReparos + totalDespesas + totalSeguros)}
-                    </div>
+                
+                document.getElementById('modalVeicConteudo').innerHTML = `
+                    <div><strong>Placa:</strong> ${v.placa}</div>
+                    <div><strong>Veículo:</strong> ${v.marca} ${v.modelo}</div>
+                    <div><strong>Ano:</strong> ${v.ano}</div>
+                    <div><strong>Cor:</strong> ${v.cor || '-'}</div>
+                    <div><strong>Chassi:</strong> ${v.chassi || '-'}</div>
+                    <div><strong>Renavam:</strong> ${v.renavam || '-'}</div>
+                    <div><strong>Data Compra:</strong> ${v.dataCompra || '-'}</div>
+                    <div><strong>Local:</strong> ${v.local || '-'}</div>
+                    <div><strong>Valor:</strong> ${formatarMoeda(v.valorCompra)}</div>
+                    <hr>${htmlArquivos}<hr>
+                    <h4>💰 Gastos Totais:</h4>
+                    <div>Seguros: ${formatarMoeda(totalSeguros)}</div>
+                    <div>Combustível: ${formatarMoeda(totalCombustivel)}</div>
+                    <div>Revisões: ${formatarMoeda(totalRevisoes)}</div>
+                    <div>Reparos: ${formatarMoeda(totalReparos)}</div>
+                    <div>Despesas: ${formatarMoeda(totalDespesas)}</div>
+                    <div style="font-weight:bold;margin-top:10px;">Total: ${formatarMoeda(totalCombustivel + totalRevisoes + totalReparos + totalDespesas + totalSeguros)}</div>
                 `;
                 document.getElementById('modalVeiculoDetalhes').style.display = 'flex';
             }
 
-            function addVeiculo() {
-                const marca = document.getElementById('vMarca')?.value.trim();
-                const modelo = document.getElementById('vModelo')?.value.trim();
-                const ano = parseInt(document.getElementById('vAno')?.value);
-                const cor = document.getElementById('vCor')?.value.trim();
-                const placa = document.getElementById('vPlaca')?.value.trim().toUpperCase();
-                const chassi = document.getElementById('vChassi')?.value.trim();
-                const dataCompra = document.getElementById('vDataCompra')?.value;
-                const valorCompra = parseFloat(document.getElementById('vValor')?.value) || 0;
-                const renavam = document.getElementById('vRenavam')?.value.trim();
-                const local = document.getElementById('vLocal')?.value.trim();
-
-                if(!marca || !modelo || !ano || !placa) { alert("Preencha marca, modelo, ano e placa!"); return; }
-
-                if(editandoVeiculoId) {
-                    const idx = dados.veiculos.findIndex(v => v.id === editandoVeiculoId);
-                    if(idx !== -1) dados.veiculos[idx] = { id: editandoVeiculoId, marca, modelo, ano, cor, placa, chassi, dataCompra, valorCompra, renavam, local, arquivos: [...listaArquivosTemp] };
-                    editandoVeiculoId = null; document.getElementById('btnSalvarVeiculo').innerHTML = '➕ Adicionar';
-                } else {
-                    dados.veiculos.push({ id: ids.veiculos++, marca, modelo, ano, cor, placa, chassi, dataCompra, valorCompra, renavam, local, arquivos: [...listaArquivosTemp] });
-                }
-                salvar(); renderVeiculos(); atualizarCombos(); limparVeiculo(); atualizarStatus("Veículo salvo");
-            }
-
-            function editVeiculo(id) {
-                const v = dados.veiculos.find(v => v.id === id);
-                if(v) {
-                    document.getElementById('vMarca').value = v.marca; document.getElementById('vModelo').value = v.modelo;
-                    document.getElementById('vAno').value = v.ano; document.getElementById('vCor').value = v.cor || '';
-                    document.getElementById('vPlaca').value = v.placa; 
-                    document.getElementById('vChassi').value = v.chassi || '';
-                    document.getElementById('vDataCompra').value = v.dataCompra || '';
-                    document.getElementById('vValor').value = v.valorCompra || '';
-                    document.getElementById('vRenavam').value = v.renavam || '';
-                    document.getElementById('vLocal').value = v.local || '';
-                    
-                    listaArquivosTemp = v.arquivos ? [...v.arquivos] : [];
-                    renderListaArquivosForm();
-                    
-                    editandoVeiculoId = id; document.getElementById('btnSalvarVeiculo').innerHTML = '✏️ Atualizar';
-                }
-            }
-
-            function delVeiculo(id) {
-                if(confirm("Eliminar veículo e todos os registos vinculados?")) {
+            function excluirVeiculo(id) {
+                if(confirm("Eliminar veículo e todos os registros?")) {
                     dados.veiculos = dados.veiculos.filter(v => v.id !== id);
                     dados.abastecimentos = dados.abastecimentos.filter(a => a.veiculoId !== id);
                     dados.revisoes = dados.revisoes.filter(r => r.veiculoId !== id);
-                    dados.reparos = dados.reparos.filter(e => e.veiculoId !== id);
+                    dados.reparos = dados.reparos.filter(r => r.veiculoId !== id);
                     dados.despesas = dados.despesas.filter(d => d.veiculoId !== id);
                     dados.pecas = dados.pecas.filter(p => p.veiculoId !== id);
                     dados.seguros = dados.seguros.filter(s => s.veiculoId !== id);
-                    salvar(); renderTudo();
+                    salvar();
+                    renderTudo();
                 }
             }
 
             function limparVeiculo() {
-                ['vMarca', 'vModelo', 'vAno', 'vCor', 'vPlaca', 'vChassi', 'vDataCompra', 'vValor', 'vRenavam', 'vLocal', 'vDocumento'].forEach(id => {
-                    const el = document.getElementById(id); if(el) el.value = '';
-                });
+                const campos = ['vMarca','vModelo','vAno','vCor','vPlaca','vChassi','vDataCompra','vValor','vRenavam','vLocal'];
+                campos.forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+                document.getElementById('vDocumento').value = '';
                 listaArquivosTemp = [];
                 renderListaArquivosForm();
-                editandoVeiculoId = null; document.getElementById('btnSalvarVeiculo').innerHTML = '➕ Adicionar';
+                editando.veiculo = null;
+                document.getElementById('btnSalvarVeiculo').innerHTML = '➕ Adicionar';
             }
 
-            // MÓDULO: SEGUROS
+            // ========== SEGUROS ==========
             function renderSeguros() {
-                const filtroId = parseInt(document.getElementById('filtroSegVeiculo')?.value) || 0;
-                const tbody = document.querySelector('#tabelaSeguros tbody'); if(!tbody) return;
-                const filtrados = dados.seguros.filter(s => filtroId === 0 || s.veiculoId === filtroId);
-
+                const filtro = parseInt(document.getElementById('filtroSegVeiculo')?.value) || 0;
+                const tbody = document.querySelector('#tabelaSeguros tbody');
+                if(!tbody) return;
+                const filtrados = dados.seguros.filter(s => filtro === 0 || s.veiculoId === filtro);
                 tbody.innerHTML = filtrados.map(s => {
-                    const v = dados.veiculos.find(ve => ve.id === s.veiculoId);
-                    return `
-                    <tr>
-                        <td>${v ? v.placa : '-'}</td><td>${s.seguradora}</td><td>${s.apolice}</td><td>${formatarMoeda(s.valorFranquia)}</td>
-                        <td>
-                            <button class="small" data-action="editSeguro" data-id="${s.id}">✏️</button>
-                            <button class="danger small" data-action="delSeguro" data-id="${s.id}">🗑️</button>
-                        </td>
+                    const v = dados.veiculos.find(v => v.id === s.veiculoId);
+                    return `<tr>
+                        <td>${v ? v.placa : '-'}</td>
+                        <td>${s.seguradora}</td>
+                        <td>${s.apolice}</td>
+                        <td>${formatarMoeda(s.valorFranquia)}</td>
+                        <td><button class="small" data-action="editarSeguro" data-id="${s.id}">✏️</button><button class="danger small" data-action="excluirSeguro" data-id="${s.id}">🗑️</button></td>
                     </tr>`;
                 }).join('');
             }
 
-            function addSeguro() {
+            function salvarSeguro() {
                 const veiculoId = parseInt(document.getElementById('segVeiculo')?.value);
                 const seguradora = document.getElementById('segSeguradora')?.value.trim();
                 const apolice = document.getElementById('segApolice')?.value.trim();
-                const valorPago = parseFloat(document.getElementById('segValorPago')?.value) || 0;
-                const valorFranquia = parseFloat(document.getElementById('segValorFranquia')?.value) || 0;
-                const contatoEmergencia = document.getElementById('segContatoEmergencia')?.value.trim();
-                const despachanteNome = document.getElementById('segDespNome')?.value.trim();
-                const despachanteContato = document.getElementById('segDespContato')?.value.trim();
-                const cpfSegurado = document.getElementById('segCpf')?.value.trim();
-
-                if(!veiculoId || !seguradora || !apolice) { alert("Preencha veículo, seguradora e apólice!"); return; }
-
-                if(editandoSeguroId) {
-                    const idx = dados.seguros.findIndex(s => s.id === editandoSeguroId);
-                    if(idx !== -1) dados.seguros[idx] = { id: editandoSeguroId, veiculoId, seguradora, apolice, valorPago, valorFranquia, contatoEmergencia, despachanteNome, despachanteContato, cpfSegurado };
-                    editandoSeguroId = null; document.getElementById('btnSalvarSeguro').innerHTML = '➕ Registrar';
-                } else {
-                    dados.seguros.push({ id: ids.seguros++, veiculoId, seguradora, apolice, valorPago, valorFranquia, contatoEmergencia, despachanteNome, despachanteContato, cpfSegurado });
+                
+                if(!veiculoId || !seguradora || !apolice) {
+                    alert("Preencha veículo, seguradora e apólice!");
+                    return;
                 }
-                salvar(); renderSeguros(); limparSeguro(); atualizarStatus("Seguro salvo!");
+                
+                const seguro = {
+                    veiculoId, seguradora, apolice,
+                    valorPago: parseFloat(document.getElementById('segValorPago')?.value) || 0,
+                    valorFranquia: parseFloat(document.getElementById('segValorFranquia')?.value) || 0,
+                    contatoEmergencia: document.getElementById('segContatoEmergencia')?.value.trim() || '',
+                    despachanteNome: document.getElementById('segDespNome')?.value.trim() || '',
+                    despachanteContato: document.getElementById('segDespContato')?.value.trim() || '',
+                    cpfSegurado: document.getElementById('segCpf')?.value.trim() || ''
+                };
+                
+                if(editando.seguro) {
+                    const idx = dados.seguros.findIndex(s => s.id === editando.seguro);
+                    if(idx !== -1) dados.seguros[idx] = { id: editando.seguro, ...seguro };
+                    editando.seguro = null;
+                } else {
+                    seguro.id = ids.seguros++;
+                    dados.seguros.push(seguro);
+                }
+                
+                salvar();
+                renderSeguros();
+                limparSeguro();
+                atualizarStatus("Seguro salvo!");
             }
-
-            function editSeguro(id) {
+            
+            function editarSeguro(id) {
                 const s = dados.seguros.find(s => s.id === id);
                 if(s) {
                     document.getElementById('segVeiculo').value = s.veiculoId;
-                    document.getElementById('segSeguradora').value = s.seguradora || '';
-                    document.getElementById('segApolice').value = s.apolice || '';
-                    document.getElementById('segValorPago').value = s.valorPago || '';
-                    document.getElementById('segValorFranquia').value = s.valorFranquia || '';
+                    document.getElementById('segSeguradora').value = s.seguradora;
+                    document.getElementById('segApolice').value = s.apolice;
+                    document.getElementById('segValorPago').value = s.valorPago;
+                    document.getElementById('segValorFranquia').value = s.valorFranquia;
                     document.getElementById('segContatoEmergencia').value = s.contatoEmergencia || '';
                     document.getElementById('segDespNome').value = s.despachanteNome || '';
                     document.getElementById('segDespContato').value = s.despachanteContato || '';
                     document.getElementById('segCpf').value = s.cpfSegurado || '';
-                    editandoSeguroId = id; document.getElementById('btnSalvarSeguro').innerHTML = '✏️ Atualizar';
+                    editando.seguro = id;
                 }
             }
-
-            function delSeguro(id) {
-                if(confirm("Eliminar registro de seguro?")) { dados.seguros = dados.seguros.filter(s => s.id !== id); salvar(); renderSeguros(); }
+            
+            function excluirSeguro(id) {
+                if(confirm("Eliminar seguro?")) {
+                    dados.seguros = dados.seguros.filter(s => s.id !== id);
+                    salvar();
+                    renderSeguros();
+                }
             }
-
+            
             function limparSeguro() {
-                ['segVeiculo', 'segSeguradora', 'segApolice', 'segValorPago', 'segValorFranquia', 'segContatoEmergencia', 'segDespNome', 'segDespContato', 'segCpf'].forEach(id => {
-                    const el = document.getElementById(id); if(el) el.value = '';
-                });
-                editandoSeguroId = null; document.getElementById('btnSalvarSeguro').innerHTML = '➕ Registrar';
+                const campos = ['segVeiculo','segSeguradora','segApolice','segValorPago','segValorFranquia','segContatoEmergencia','segDespNome','segDespContato','segCpf'];
+                campos.forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+                editando.seguro = null;
             }
 
-            // MÓDULO: PEÇAS 
+            // ========== PEÇAS ==========
             function renderPecas() {
-                const tbody = document.querySelector('#tabelaPecas tbody'); if(!tbody) return;
-                const filtroId = parseInt(document.getElementById('filtroPecasVeiculo')?.value) || 0;
-
-                const pecasFiltradas = dados.pecas.filter(p => {
-                    if (filtroId === 0) return true;
-                    return p.veiculoId === 0 || p.veiculoId === filtroId;
-                });
-
-                tbody.innerHTML = pecasFiltradas.map(p => {
-                    const v = dados.veiculos.find(ve => ve.id === p.veiculoId);
-                    const compatibilidade = v ? `${v.marca} ${v.modelo} (${v.placa})` : '⚙️ Geral / Multi-veículo';
-                    return `
-                    <tr>
-                        <td>${p.nome}</td><td>${compatibilidade}</td><td>${p.local || '-'}</td><td>${formatarMoeda(p.preco)}</td>
-                        <td>
-                            <button class="small" data-action="editPeca" data-id="${p.id}">✏️</button> 
-                            <button class="danger small" data-action="delPeca" data-id="${p.id}">🗑️</button>
-                        </td>
+                const filtro = parseInt(document.getElementById('filtroPecasVeiculo')?.value) || 0;
+                const tbody = document.querySelector('#tabelaPecas tbody');
+                if(!tbody) return;
+                const filtradas = dados.pecas.filter(p => filtro === 0 || p.veiculoId === 0 || p.veiculoId === filtro);
+                tbody.innerHTML = filtradas.map(p => {
+                    const v = dados.veiculos.find(v => v.id === p.veiculoId);
+                    const compat = v ? `${v.marca} ${v.modelo}` : '⚙️ Geral';
+                    return `<tr>
+                        <td>${p.nome}</td>
+                        <td>${compat}</td>
+                        <td>${p.local || '-'}</td>
+                        <td>${formatarMoeda(p.preco)}</td>
+                        <td><button class="small" data-action="editarPeca" data-id="${p.id}">✏️</button><button class="danger small" data-action="excluirPeca" data-id="${p.id}">🗑️</button></td>
                     </tr>`;
                 }).join('');
             }
 
-            function addPeca() {
+            function salvarPeca() {
                 const veiculoId = parseInt(document.getElementById('pVeiculoId')?.value) || 0;
                 const nome = document.getElementById('pNome')?.value.trim();
-                const marca = document.getElementById('pMarca')?.value.trim();
                 const preco = parseFloat(document.getElementById('pPreco')?.value);
-                const local = document.getElementById('pLocal')?.value.trim();
-
-                if(!nome || isNaN(preco)) { alert("Preencha nome e preço!"); return; }
-
-                if(editandoPecaId) {
-                    const idx = dados.pecas.findIndex(p => p.id === editandoPecaId);
-                    if(idx !== -1) dados.pecas[idx] = { id: editandoPecaId, veiculoId, nome, marca, preco, local };
-                    editandoPecaId = null; document.getElementById('btnSalvarPeca').innerHTML = '➕ Adicionar';
-                } else {
-                    dados.pecas.push({ id: ids.pecas++, veiculoId, nome, marca, preco, local });
+                
+                if(!nome || isNaN(preco)) {
+                    alert("Preencha nome e preço!");
+                    return;
                 }
-                salvar(); renderPecas(); atualizarPecasContextuaisRev(); atualizarPecasContextuaisRep(); limparPeca(); atualizarStatus("Peça salva");
+                
+                const peca = {
+                    veiculoId, nome,
+                    marca: document.getElementById('pMarca')?.value.trim() || '',
+                    preco: preco,
+                    local: document.getElementById('pLocal')?.value.trim() || ''
+                };
+                
+                if(editando.peca) {
+                    const idx = dados.pecas.findIndex(p => p.id === editando.peca);
+                    if(idx !== -1) dados.pecas[idx] = { id: editando.peca, ...peca };
+                    editando.peca = null;
+                    document.getElementById('btnSalvarPeca').innerHTML = '💾 Salvar Peça';
+                } else {
+                    peca.id = ids.pecas++;
+                    dados.pecas.push(peca);
+                }
+                
+                salvar();
+                renderPecas();
+                atualizarPecasContextuais();
+                limparPeca();
+                atualizarStatus("Peça salva!");
             }
-
-            function editPeca(id) {
+            
+            function editarPeca(id) {
                 const p = dados.pecas.find(p => p.id === id);
                 if(p) {
-                    document.getElementById('pVeiculoId').value = p.veiculoId; document.getElementById('pNome').value = p.nome; 
-                    document.getElementById('pMarca').value = p.marca || ''; document.getElementById('pPreco').value = p.preco;
+                    document.getElementById('pVeiculoId').value = p.veiculoId;
+                    document.getElementById('pNome').value = p.nome;
+                    document.getElementById('pMarca').value = p.marca || '';
+                    document.getElementById('pPreco').value = p.preco;
                     document.getElementById('pLocal').value = p.local || '';
-                    editandoPecaId = id; document.getElementById('btnSalvarPeca').innerHTML = '✏️ Otimizar';
+                    editando.peca = id;
+                    document.getElementById('btnSalvarPeca').innerHTML = '✏️ Atualizar Peça';
+                    document.getElementById('pecas').scrollIntoView({ behavior: 'smooth' });
                 }
             }
-
-            function delPeca(id) {
-                if(confirm("Eliminar peça?")) { dados.pecas = dados.pecas.filter(p => p.id !== id); salvar(); renderPecas(); atualizarPecasContextuaisRev(); atualizarPecasContextuaisRep(); }
+            
+            function excluirPeca(id) {
+                if(confirm("Eliminar peça?")) {
+                    dados.pecas = dados.pecas.filter(p => p.id !== id);
+                    salvar();
+                    renderPecas();
+                    atualizarPecasContextuais();
+                }
+            }
+            
+            function limparPeca() {
+                document.getElementById('pVeiculoId').value = '0';
+                document.getElementById('pNome').value = '';
+                document.getElementById('pMarca').value = '';
+                document.getElementById('pPreco').value = '';
+                document.getElementById('pLocal').value = '';
+                editando.peca = null;
+                document.getElementById('btnSalvarPeca').innerHTML = '💾 Salvar Peça';
             }
 
-            function limparPeca() { 
-                document.getElementById('pVeiculoId').value = '0'; document.getElementById('pNome').value = ''; 
-                document.getElementById('pMarca').value = ''; document.getElementById('pPreco').value = ''; 
-                document.getElementById('pLocal').value = ''; 
-                editandoPecaId = null; document.getElementById('btnSalvarPeca').innerHTML = '➕ Adicionar'; 
-            }
-
-            function atualizarPecasContextuaisRev() {
+            function atualizarPecasContextuais() {
                 const vId = parseInt(document.getElementById('revVeiculo')?.value) || 0;
-                const selectPeca = document.getElementById('revPeca'); if(!selectPeca) return;
                 const pecasFiltradas = dados.pecas.filter(p => p.veiculoId === 0 || p.veiculoId === vId);
-                selectPeca.innerHTML = '<option value="">Seleccione...</option>' + pecasFiltradas.map(p => `<option value="${p.id}">${p.nome} - ${formatarMoeda(p.preco)}</option>`).join('');
+                const options = '<option value="">Selecione...</option>' + pecasFiltradas.map(p => `<option value="${p.id}">${p.nome} - ${formatarMoeda(p.preco)}</option>`).join('');
+                const revSelect = document.getElementById('revPeca');
+                const repSelect = document.getElementById('repPeca');
+                if(revSelect) revSelect.innerHTML = options;
+                if(repSelect) repSelect.innerHTML = options;
             }
 
-            function atualizarPecasContextuaisRep() {
-                const vId = parseInt(document.getElementById('repVeiculo')?.value) || 0;
-                const selectPeca = document.getElementById('repPeca'); if(!selectPeca) return;
-                const pecasFiltradas = dados.pecas.filter(p => p.veiculoId === 0 || p.veiculoId === vId);
-                selectPeca.innerHTML = '<option value="">Seleccione...</option>' + pecasFiltradas.map(p => `<option value="${p.id}">${p.nome} - ${formatarMoeda(p.preco)}</option>`).join('');
-            }
-
-            // MÓDULO: ABASTECIMENTOS
-            function calcularKmL(abastAtual) {
-                const doVeiculo = dados.abastecimentos.filter(a => a.veiculoId === abastAtual.veiculoId && a.id !== abastAtual.id).sort((a, b) => a.data.localeCompare(b.data) || a.km - b.km);
-                let anterior = null;
-                for (let i = doVeiculo.length - 1; i >= 0; i--) { if (doVeiculo[i].km < abastAtual.km) { anterior = doVeiculo[i]; break; } }
-                if (anterior && abastAtual.litros > 0) {
-                    const diferencaKm = abastAtual.km - anterior.km;
-                    if (diferencaKm > 0) return (diferencaKm / abastAtual.litros).toFixed(2);
-                }
-                return '-';
-            }
-
+            // ========== ABASTECIMENTOS ==========
             function renderAbastecimentos() {
-                const filtroId = parseInt(document.getElementById('filtroAbastVeiculo')?.value) || 0;
-                const ordenados = [...dados.abastecimentos].sort((a,b)=>b.data.localeCompare(a.data));
-                const filtrados = ordenados.filter(a => filtroId === 0 || a.veiculoId === filtroId);
-                const tbody = document.querySelector('#tabelaAbastecimentos tbody'); if(!tbody) return;
-                
+                const filtro = parseInt(document.getElementById('filtroAbastVeiculo')?.value) || 0;
+                const tbody = document.querySelector('#tabelaAbastecimentos tbody');
+                if(!tbody) return;
+                const filtrados = dados.abastecimentos.filter(a => filtro === 0 || a.veiculoId === filtro);
                 tbody.innerHTML = filtrados.map(a => {
                     const v = dados.veiculos.find(v => v.id === a.veiculoId);
-                    const kml = calcularKmL(a);
                     return `<tr>
-                        <td>${a.data}</td><td>${v ? v.placa : '-'}</td><td>${a.local || '-'}</td>
-                        <td>${(a.litros||0).toFixed(2)}</td><td>${formatarMoeda(a.total)}</td><td>${a.km}</td>
-                        <td style="font-weight:bold; color:#2e7d32">${kml !== '-' ? kml + ' km/L' : '-'}</td>
-                        <td>
-                            <button class="small" data-action="editAbast" data-id="${a.id}">✏️</button>
-                            <button class="danger small" data-action="delAbast" data-id="${a.id}">🗑️</button>
-                        </td>
+                        <td>${a.data}</td>
+                        <td>${v ? v.placa : '-'}</td>
+                        <td>${a.local || '-'}</td>
+                        <td>${a.litros}</td>
+                        <td>${formatarMoeda(a.total)}</td>
+                        <td>${a.km}</td>
+                        <td><button class="small" data-action="editarAbast" data-id="${a.id}">✏️</button><button class="danger small" data-action="excluirAbast" data-id="${a.id}">🗑️</button></td>
                     </tr>`;
                 }).join('');
             }
 
-            function addAbastecimento() {
+            function salvarAbastecimento() {
                 const veiculoId = parseInt(document.getElementById('abVeiculo')?.value);
                 const data = document.getElementById('abData')?.value;
-                const tipo = document.getElementById('abTipo')?.value;
                 const litros = parseFloat(document.getElementById('abLitros')?.value);
                 const preco = parseFloat(document.getElementById('abPreco')?.value);
                 const km = parseFloat(document.getElementById('abKm')?.value);
-                const local = document.getElementById('abLocal')?.value.trim();
-
-                if(!veiculoId || !data || isNaN(litros) || isNaN(preco) || isNaN(km)) { alert("Preencha todos os campos!"); return; }
-
-                if(editandoAbastId) {
-                    const idx = dados.abastecimentos.findIndex(a => a.id === editandoAbastId);
-                    if(idx !== -1) dados.abastecimentos[idx] = { id: editandoAbastId, veiculoId, data, tipo, litros, preco, total: litros * preco, km, local };
-                    editandoAbastId = null; document.getElementById('btnSalvarAbastecimento').innerHTML = '⛽ Registrar';
-                } else {
-                    dados.abastecimentos.push({ id: ids.abastecimentos++, veiculoId, data, tipo, litros, preco, total: litros * preco, km, local });
+                
+                if(!veiculoId || !data || isNaN(litros) || isNaN(preco) || isNaN(km)) {
+                    alert("Preencha todos os campos!");
+                    return;
                 }
-                salvar(); renderAbastecimentos(); limparAbastecimento(); atualizarStatus("Abastecimento registado!");
+                
+                const abast = {
+                    veiculoId, data, litros, preco, km,
+                    total: litros * preco,
+                    local: document.getElementById('abLocal')?.value.trim() || ''
+                };
+                
+                if(editando.abast) {
+                    const idx = dados.abastecimentos.findIndex(a => a.id === editando.abast);
+                    if(idx !== -1) dados.abastecimentos[idx] = { id: editando.abast, ...abast };
+                    editando.abast = null;
+                } else {
+                    abast.id = ids.abastecimentos++;
+                    dados.abastecimentos.push(abast);
+                }
+                
+                salvar();
+                renderAbastecimentos();
+                limparAbastecimento();
+                atualizarStatus("Abastecimento salvo!");
             }
-
-            function editAbastecimento(id) {
-                const a = dados.abastecimentos.find(x => x.id === id);
+            
+            function editarAbastecimento(id) {
+                const a = dados.abastecimentos.find(a => a.id === id);
                 if(a) {
                     document.getElementById('abVeiculo').value = a.veiculoId;
                     document.getElementById('abData').value = a.data;
-                    document.getElementById('abTipo').value = a.tipo || '';
                     document.getElementById('abLitros').value = a.litros;
                     document.getElementById('abPreco').value = a.preco;
                     document.getElementById('abKm').value = a.km;
                     document.getElementById('abLocal').value = a.local || '';
-                    editandoAbastId = id; document.getElementById('btnSalvarAbastecimento').innerHTML = '✏️ Atualizar';
-                    acionarTabMobile("abastecimentos");
+                    editando.abast = id;
                 }
             }
-
-            function delAbastecimento(id) { 
-                if(confirm("Eliminar abastecimento?")) { dados.abastecimentos = dados.abastecimentos.filter(a => a.id !== id); salvar(); renderAbastecimentos(); } 
+            
+            function excluirAbastecimento(id) {
+                if(confirm("Eliminar abastecimento?")) {
+                    dados.abastecimentos = dados.abastecimentos.filter(a => a.id !== id);
+                    salvar();
+                    renderAbastecimentos();
+                }
             }
-
+            
             function limparAbastecimento() {
-                document.getElementById('abVeiculo').value = ''; document.getElementById('abData').value = new Date().toISOString().split('T')[0];
-                document.getElementById('abLitros').value = ''; document.getElementById('abPreco').value = ''; document.getElementById('abKm').value = '';
+                document.getElementById('abVeiculo').value = '';
+                document.getElementById('abData').value = new Date().toISOString().split('T')[0];
+                document.getElementById('abLitros').value = '';
+                document.getElementById('abPreco').value = '';
+                document.getElementById('abKm').value = '';
                 document.getElementById('abLocal').value = '';
-                editandoAbastId = null; document.getElementById('btnSalvarAbastecimento').innerHTML = '⛽ Registrar';
+                editando.abast = null;
             }
 
-            // MÓDULO: REVISÕES
+            // ========== REVISÕES ==========
             function atualizarTotalRev() {
-                const totalPecas = listaPecasTemp.reduce((s,p)=>s + p.total, 0);
+                const totalPecas = listaPecasRevTemp.reduce((s,p) => s + p.total, 0);
                 const mao = parseFloat(document.getElementById('revCustoMao')?.value) || 0;
-                document.getElementById('totalRev').innerHTML = `Total: ${formatarMoeda(totalPecas+mao)} (Peças: ${formatarMoeda(totalPecas)} + Mão: ${formatarMoeda(mao)})`;
+                document.getElementById('totalRev').innerHTML = `Total: ${formatarMoeda(totalPecas + mao)}`;
             }
-
+            
+            function renderListaPecasRev() {
+                const container = document.getElementById('listaPecasRev');
+                if(!container) return;
+                if(listaPecasRevTemp.length === 0) {
+                    container.innerHTML = '<p style="color:#999">Nenhuma peça adicionada</p>';
+                    return;
+                }
+                container.innerHTML = listaPecasRevTemp.map((p,i) => `
+                    <div class="peca-item">
+                        <span>${p.pecaNome} x${p.quantidade} = ${formatarMoeda(p.total)}</span>
+                        <button class="danger small" data-action="removerPecaRev" data-idx="${i}">🗑️</button>
+                    </div>
+                `).join('');
+            }
+            
             function addPecaRev() {
                 const pecaId = parseInt(document.getElementById('revPeca')?.value);
-                const qtd = parseInt(document.getElementById('revQtd')?.value) || 1;
+                const qtd = parseFloat(document.getElementById('revQtd')?.value) || 1;
                 if(!pecaId) { alert("Selecione uma peça"); return; }
                 const peca = dados.pecas.find(p => p.id === pecaId);
                 if(peca) {
-                    listaPecasTemp.push({ pecaId, pecaNome: peca.nome, quantidade: qtd, valorUnitario: peca.preco, total: peca.preco * qtd });
-                    renderListaPecasRev(); atualizarTotalRev();
-                    document.getElementById('revPeca').value = ''; document.getElementById('revQtd').value = '1';
+                    listaPecasRevTemp.push({
+                        pecaId, pecaNome: peca.nome, quantidade: qtd,
+                        valorUnitario: peca.preco, total: peca.preco * qtd
+                    });
+                    renderListaPecasRev();
+                    atualizarTotalRev();
+                    document.getElementById('revPeca').value = '';
+                    document.getElementById('revQtd').value = '1';
                 }
             }
-
-            function renderListaPecasRev() {
-                const container = document.getElementById('listaPecasRev'); if(!container) return;
-                container.innerHTML = listaPecasTemp.map((p,i) => `<div class="peca-item"><span>${p.pecaNome} x${p.quantidade} = ${formatarMoeda(p.total)}</span><button class="danger small" data-action="removePecaRev" data-idx="${i}">🗑️</button></div>`).join('');
-                if(listaPecasTemp.length === 0) container.innerHTML = '<p style="color:#999;text-align:center">Nenhuma peça adicionada</p>';
-            }
-
-            function calcProxData() {
-                const data = document.getElementById('revData')?.value;
-                if(data) { const d = new Date(data + 'T00:00:00'); d.setFullYear(d.getFullYear() + 1); document.getElementById('revProxData').value = d.toLocaleDateString('pt-BR'); }
-            }
-
-            function addRevisao() {
-                const veiculoId = parseInt(document.getElementById('revVeiculo')?.value);
-                const data = document.getElementById('revData')?.value;
-                const km = parseFloat(document.getElementById('revKm')?.value);
-                const custoMao = parseFloat(document.getElementById('revCustoMao')?.value) || 0;
-                const local = document.getElementById('revLocal')?.value.trim();
-
-                if(!veiculoId || !data || isNaN(km)) { alert("Preencha veículo, data e KM!"); return; }
-
-                const totalPecas = listaPecasTemp.reduce((s,p)=>s + p.total, 0);
-                const custoTotal = custoMao + totalPecas;
-                const d = new Date(data + 'T00:00:00'); d.setFullYear(d.getFullYear() + 1);
-                const proxKm = parseFloat(document.getElementById('revProxKm')?.value) || 0;
-
-                if (editandoRevisaoId) {
-                    const idx = dados.revisoes.findIndex(r => r.id === editandoRevisaoId);
-                    if (idx !== -1) {
-                        dados.revisoes[idx] = { id: editandoRevisaoId, veiculoId, data, km, custoMao, custoPecas: totalPecas, custoTotal, proxKm, proxData: d.toISOString().split('T')[0], local };
-                        // CORREÇÃO: Assegura o filtro comparando como Number para não manter o rastro da peça antiga
-                        dados.revisaoPecas = dados.revisaoPecas.filter(p => Number(p.revisaoId) !== Number(editandoRevisaoId));
-                    }
-                } else {
-                    const novaRev = { id: ids.revisoes++, veiculoId, data, km, custoMao, custoPecas: totalPecas, custoTotal, proxKm, proxData: d.toISOString().split('T')[0], local };
-                    dados.revisoes.push(novaRev); editandoRevisaoId = novaRev.id;
-                }
-
-                listaPecasTemp.forEach(p => { dados.revisaoPecas.push({ id: Date.now() + Math.random(), revisaoId: editandoRevisaoId, pecaId: p.pecaId, quantidade: p.quantidade, valorUnitario: p.valorUnitario, total: p.total }); });
-                editandoRevisaoId = null; document.getElementById('btnSalvarRevisao').innerHTML = '🔧 Registrar';
-                salvar(); renderRevisoes(); limparRevisao(); atualizarStatus("Revisão salva!");
-            }
-
-            function editRevisao(id) {
-                const r = dados.revisoes.find(rev => rev.id === id); if (!r) return;
-                document.getElementById('revVeiculo').value = r.veiculoId; atualizarPecasContextuaisRev();
-                document.getElementById('revData').value = r.data; document.getElementById('revKm').value = r.km; 
-                document.getElementById('revCustoMao').value = r.custoMao; document.getElementById('revProxKm').value = r.proxKm;
-                document.getElementById('revLocal').value = r.local || '';
-                
-                listaPecasTemp = dados.revisaoPecas.filter(rp => rp.revisaoId === id).map(rp => {
-                    const po = dados.pecas.find(p => p.id === rp.pecaId);
-                    return { pecaId: rp.pecaId, pecaNome: po ? po.nome : 'Peça', quantidade: rp.quantidade, valorUnitario: rp.valorUnitario, total: rp.total };
-                });
-                renderListaPecasRev(); atualizarTotalRev(); calcProxData();
-                editandoRevisaoId = id; document.getElementById('btnSalvarRevisao').innerHTML = '✏️ Atualizar Revisão';
-                acionarTabMobile("revisoes");
-            }
-
-            // CORREÇÃO: Função nova para exibir as peças corretamente na tabela de Revisões
-            function verPecasRev(id) {
-                const rev = dados.revisoes.find(r => r.id === id); 
-                if(!rev) return;
-                
-                const pecasVinculadas = dados.revisaoPecas.filter(p => Number(p.revisaoId) === Number(id));
-                const container = document.getElementById('modalLista'); 
-                if(!container) return;
-
-                let htmlPecas = pecasVinculadas.map(p => {
-                    const po = dados.pecas.find(po => Number(po.id) === Number(p.pecaId));
-                    return `<div class="peca-item" style="font-size:13px;">
-                        <span>${po ? po.nome : 'Peça desconhecida'} (x${p.quantidade})</span> 
-                        <span>${formatarMoeda(p.total)}</span>
-                    </div>`;
-                }).join('');
-                
-                if(pecasVinculadas.length === 0) {
-                    htmlPecas = '<p style="color:#777; font-size:13px; text-align:center;">Nenhuma peça utilizada nesta revisão.</p>';
-                }
-
-                container.innerHTML = htmlPecas;
-                document.getElementById('modalPecas').style.display = 'flex';
-            }
-
+            
             function renderRevisoes() {
-                const filtroId = parseInt(document.getElementById('filtroRevVeiculo')?.value) || 0;
-                const tbody = document.querySelector('#tabelaRevisoes tbody'); if(!tbody) return;
-                const filtrados = dados.revisoes.filter(r => filtroId === 0 || r.veiculoId === filtroId);
-
+                const filtro = parseInt(document.getElementById('filtroRevVeiculo')?.value) || 0;
+                const tbody = document.querySelector('#tabelaRevisoes tbody');
+                if(!tbody) return;
+                const filtrados = dados.revisoes.filter(r => filtro === 0 || r.veiculoId === filtro);
                 tbody.innerHTML = filtrados.map(r => {
                     const v = dados.veiculos.find(v => v.id === r.veiculoId);
-                    return `<tr><td>${r.data}</td><td>${v ? v.placa : '-'}</td><td>${r.local || '-'}</td><td>${r.km}</td><td>${formatarMoeda(r.custoTotal)}</td><td><button class="small" data-action="editRevisao" data-id="${r.id}">✏️</button> <button class="small" data-action="verPecasRev" data-id="${r.id}">🔍 Peças</button> <button class="danger small" data-action="delRevisao" data-id="${r.id}">🗑️</button></td></tr>`;
-                }).join('');
-            }
-
-            function delRevisao(id) { 
-                if(confirm("Eliminar revisão?")) { dados.revisoes = dados.revisoes.filter(r => r.id !== id); dados.revisaoPecas = dados.revisaoPecas.filter(p => p.revisaoId !== id); salvar(); renderRevisoes(); carregarAlertas(); } 
-            }
-
-            function limparRevisao() {
-                document.getElementById('revVeiculo').value = ''; document.getElementById('revData').value = new Date().toISOString().split('T')[0];
-                document.getElementById('revKm').value = ''; document.getElementById('revCustoMao').value = ''; document.getElementById('revProxKm').value = '';
-                document.getElementById('revLocal').value = '';
-                listaPecasTemp = []; renderListaPecasRev(); atualizarTotalRev(); calcProxData();
-                editandoRevisaoId = null; document.getElementById('btnSalvarRevisao').innerHTML = '🔧 Registrar';
-                atualizarPecasContextuaisRev();
-            }
-
-            // MÓDULO: REPAROS
-            function atualizarTotalRep() {
-                const totalPecas = listaPecasRepTemp.reduce((s,p)=> s + p.total, 0);
-                const custoServico = parseFloat(document.getElementById('repCusto')?.value) || 0;
-                document.getElementById('totalRep').innerHTML = `Total: ${formatarMoeda(totalPecas + custoServico)} (Peças: ${formatarMoeda(totalPecas)} + Serviço: ${formatarMoeda(custoServico)})`;
-            }
-
-            function addPecaRep() {
-                const pecaId = parseInt(document.getElementById('repPeca')?.value);
-                const qtd = parseInt(document.getElementById('repQtd')?.value) || 1;
-                if(!pecaId) { alert("Selecione uma peça"); return; }
-                const peca = dados.pecas.find(p => p.id === pecaId);
-                if(peca) {
-                    listaPecasRepTemp.push({ pecaId, pecaNome: peca.nome, quantidade: qtd, valorUnitario: peca.preco, total: peca.preco * qtd });
-                    renderListaPecasRep(); atualizarTotalRep();
-                    document.getElementById('repPeca').value = ''; document.getElementById('repQtd').value = '1';
-                }
-            }
-
-            function renderListaPecasRep() {
-                const container = document.getElementById('listaPecasRep'); if(!container) return;
-                container.innerHTML = listaPecasRepTemp.map((p,i) => `<div class="peca-item"><span>${p.pecaNome} x${p.quantidade} = ${formatarMoeda(p.total)}</span><button class="danger small" data-action="removePecaRep" data-idx="${i}">🗑️</button></div>`).join('');
-                if(listaPecasRepTemp.length === 0) container.innerHTML = '<p style="color:#999;text-align:center">Nenhuma peça adicionada</p>';
-            }
-
-            function addReparo() {
-                const veiculoId = parseInt(document.getElementById('repVeiculo')?.value);
-                const tipo = document.getElementById('repTipo')?.value;
-                const custoMao = parseFloat(document.getElementById('repCusto')?.value) || 0;
-                const descricao = document.getElementById('repDescricao')?.value.trim();
-                const local = document.getElementById('repLocal')?.value.trim();
-                
-                if(!veiculoId || !tipo) { alert("Preencha veículo e tipo!"); return; }
-                const totalPecas = listaPecasRepTemp.reduce((s,p)=> s + p.total, 0);
-                const custoTotal = custoMao + totalPecas;
-
-                if (editandoReparoId) {
-                    const idx = dados.reparos.findIndex(rep => rep.id === editandoReparoId);
-                    if (idx !== -1) {
-                        dados.reparos[idx] = { id: editandoReparoId, veiculoId, tipo, custoMao, custoPecas: totalPecas, custo: custoTotal, descricao, data: dados.reparos[idx].data, local };
-                        // CORREÇÃO: Assegura a remoção do rastro da peça no caso do reparo
-                        dados.reparoPecas = dados.reparoPecas.filter(p => Number(p.eventoId) !== Number(editandoReparoId));
-                    }
-                } else {
-                    const novoReparo = { id: ids.reparos++, veiculoId, tipo, custoMao, custoPecas: totalPecas, custo: custoTotal, descricao, data: new Date().toISOString().split('T')[0], local };
-                    dados.reparos.push(novoReparo); editandoReparoId = novoReparo.id;
-                }
-
-                listaPecasRepTemp.forEach(p => { dados.reparoPecas.push({ id: Date.now() + Math.random(), eventoId: editandoReparoId, pecaId: p.pecaId, quantidade: p.quantidade, valorUnitario: p.valorUnitario, total: p.total }); });
-                editandoReparoId = null; document.getElementById('btnSalvarReparo').innerHTML = '📋 Registrar';
-                salvar(); renderReparos(); limparReparo(); atualizarStatus("Reparo salvo!");
-            }
-
-            function editReparo(id) {
-                const rep = dados.reparos.find(r => r.id === id); if(!rep) return;
-                document.getElementById('repVeiculo').value = rep.veiculoId; atualizarPecasContextuaisRep();
-                document.getElementById('repTipo').value = rep.tipo; document.getElementById('repCusto').value = rep.custoMao; 
-                document.getElementById('repDescricao').value = rep.descricao || '';
-                document.getElementById('repLocal').value = rep.local || '';
-
-                listaPecasRepTemp = dados.reparoPecas.filter(rp => rp.eventoId === id).map(rp => {
-                    const po = dados.pecas.find(p => p.id === rp.pecaId);
-                    return { pecaId: rp.pecaId, pecaNome: po ? po.nome : 'Peça', quantidade: rp.quantidade, valorUnitario: rp.valorUnitario, total: rp.total };
-                });
-                renderListaPecasRep(); atualizarTotalRep();
-                editandoReparoId = id; document.getElementById('btnSalvarReparo').innerHTML = '✏️ Atualizar Reparo';
-                acionarTabMobile("reparos");
-            }
-
-            // MÓDULO: REPAROS CONTINUAÇÃO
-            function renderReparos() {
-                const filtroId = parseInt(document.getElementById('filtroRepVeiculo')?.value) || 0;
-                const tbody = document.querySelector('#tabelaReparos tbody'); if(!tbody) return;
-                const filtrados = dados.reparos.filter(rep => filtroId === 0 || rep.veiculoId === filtroId);
-
-                tbody.innerHTML = filtrados.map(e => {
-                    const v = dados.veiculos.find(v => v.id === e.veiculoId);
-                    return `<tr><td>${e.data}</td><td>${v ? v.placa : '-'}</td><td>${e.tipo}</td><td>${e.local || '-'}</td><td>${formatarMoeda(e.custo)}</td><td><button class="small" data-action="editReparo" data-id="${e.id}">✏️</button> <button class="small" data-action="verDetalhesRep" data-id="${e.id}">🔍 Detalhes</button> <button class="danger small" data-action="delReparo" data-id="${e.id}">🗑️</button></td></tr>`;
-                }).join('');
-            }
-
-            function verDetalhesRep(id) {
-                const ev = dados.reparos.find(e => e.id === id); if(!ev) return;
-                const v = dados.veiculos.find(ve => ve.id === ev.veiculoId);
-                const pecasVinculadas = dados.reparoPecas.filter(p => p.eventoId === id);
-                const container = document.getElementById('modalRepConteudo'); if(!container) return;
-
-                let htmlPecas = pecasVinculadas.map(p => {
-                    const po = dados.pecas.find(po => po.id === p.pecaId);
-                    return `<div class="peca-item" style="font-size:12px;"><span>${po ? po.nome : 'Peça'} (x${p.quantidade})</span> <span>${formatarMoeda(p.total)}</span></div>`;
-                }).join('');
-                if(pecasVinculadas.length === 0) htmlPecas = '<p style="color:#777; font-size:12px;">Nenhuma peça utilizada.</p>';
-
-                container.innerHTML = `
-                    <div class="detalhe-bloco"><strong>Veículo:</strong> ${v ? `${v.marca} ${v.modelo} (${v.placa})` : '-'}</div>
-                    <div class="detalhe-bloco"><strong>Oficina/Local:</strong> ${ev.local || '-'}</div>
-                    <div class="detalhe-bloco"><strong>Tipo:</strong> ${ev.tipo}</div>
-                    <div class="detalhe-bloco"><strong>Descrição:</strong> ${ev.descricao || 'Sem descrição'}</div>
-                    <div class="detalhe-bloco"><strong>Serviço:</strong> ${formatarMoeda(ev.custoMao)}</div>
-                    <div class="detalhe-bloco"><strong>Peças:</strong>${htmlPecas}</div>
-                    <div class="detalhe-bloco" style="font-size:16px; font-weight:bold; color:#667eea; text-align:right;">Total: ${formatarMoeda(ev.custo)}</div>`;
-                document.getElementById('modalReparos').style.display = 'flex';
-            }
-
-            function delReparo(id) { 
-                if(confirm("Eliminar reparo?")) { dados.reparos = dados.reparos.filter(e => e.id !== id); dados.reparoPecas = dados.reparoPecas.filter(p => p.eventoId !== id); salvar(); renderReparos(); } 
-            }
-
-            function limparReparo() { 
-                document.getElementById('repVeiculo').value = ''; document.getElementById('repCusto').value = ''; document.getElementById('repDescricao').value = ''; 
-                document.getElementById('repLocal').value = '';
-                document.getElementById('repPeca').value = ''; document.getElementById('repQtd').value = '1';
-                listaPecasRepTemp = []; renderListaPecasRep(); atualizarTotalRep();
-                editandoReparoId = null; document.getElementById('btnSalvarReparo').innerHTML = '📋 Registrar';
-                atualizarPecasContextuaisRep();
-            }
-
-            // MÓDULO: DESPESAS
-            function renderDespesas() {
-                const filtroId = parseInt(document.getElementById('filtroDesVeiculo')?.value) || 0;
-                const ordenadas = [...dados.despesas].sort((a,b)=>b.data.localeCompare(a.data));
-                const filtradas = ordenadas.filter(d => filtroId === 0 || d.veiculoId === filtroId);
-                const tbody = document.querySelector('#tabelaDespesas tbody'); if(!tbody) return;
-                
-                tbody.innerHTML = filtradas.map(d => {
-                    const v = dados.veiculos.find(v => v.id === d.veiculoId);
-                    return `
-                    <tr>
-                        <td>${d.data}</td><td>${v ? v.placa : '-'}</td><td>${d.tipo}</td><td>${d.local || '-'}</td><td>${formatarMoeda(d.valor)}</td>
-                        <td>
-                            <button class="small" data-action="editDespesa" data-id="${d.id}">✏️</button>
-                            <button class="danger small" data-action="delDespesa" data-id="${d.id}">🗑️</button>
-                        </td>
+                    return `<tr>
+                        <td>${r.data}</td>
+                        <td>${v ? v.placa : '-'}</td>
+                        <td>${r.local || '-'}</td>
+                        <td>${r.km}</td>
+                        <td>${formatarMoeda(r.custoTotal)}</td>
+                        <td><button class="small" data-action="editarRevisao" data-id="${r.id}">✏️</button><button class="danger small" data-action="excluirRevisao" data-id="${r.id}">🗑️</button></td>
                     </tr>`;
                 }).join('');
             }
+            
+            function salvarRevisao() {
+                const veiculoId = parseInt(document.getElementById('revVeiculo')?.value);
+                const data = document.getElementById('revData')?.value;
+                const km = parseFloat(document.getElementById('revKm')?.value);
+                
+                if(!veiculoId || !data || isNaN(km)) {
+                    alert("Preencha veículo, data e KM!");
+                    return;
+                }
+                
+                const totalPecas = listaPecasRevTemp.reduce((s,p) => s + p.total, 0);
+                const custoMao = parseFloat(document.getElementById('revCustoMao')?.value) || 0;
+                const custoTotal = custoMao + totalPecas;
+                
+                const revisao = {
+                    veiculoId, data, km,
+                    custoMao, custoPecas: totalPecas, custoTotal,
+                    proxKm: parseFloat(document.getElementById('revProxKm')?.value) || 0,
+                    local: document.getElementById('revLocal')?.value.trim() || ''
+                };
+                
+                if(editando.revisao) {
+                    const idx = dados.revisoes.findIndex(r => r.id === editando.revisao);
+                    if(idx !== -1) {
+                        dados.revisoes[idx] = { id: editando.revisao, ...revisao };
+                        dados.revisaoPecas = dados.revisaoPecas.filter(p => p.revisaoId !== editando.revisao);
+                    }
+                    editando.revisao = null;
+                } else {
+                    revisao.id = ids.revisoes++;
+                    dados.revisoes.push(revisao);
+                    editando.revisao = revisao.id;
+                }
+                
+                listaPecasRevTemp.forEach(p => {
+                    dados.revisaoPecas.push({
+                        id: Date.now() + Math.random(),
+                        revisaoId: editando.revisao,
+                        pecaId: p.pecaId,
+                        quantidade: p.quantidade,
+                        valorUnitario: p.valorUnitario,
+                        total: p.total
+                    });
+                });
+                
+                editando.revisao = null;
+                salvar();
+                renderRevisoes();
+                limparRevisao();
+                atualizarStatus("Revisão salva!");
+            }
+            
+            function editarRevisao(id) {
+                const r = dados.revisoes.find(r => r.id === id);
+                if(!r) return;
+                document.getElementById('revVeiculo').value = r.veiculoId;
+                document.getElementById('revData').value = r.data;
+                document.getElementById('revKm').value = r.km;
+                document.getElementById('revCustoMao').value = r.custoMao;
+                document.getElementById('revProxKm').value = r.proxKm;
+                document.getElementById('revLocal').value = r.local || '';
+                atualizarPecasContextuais();
+                
+                listaPecasRevTemp = dados.revisaoPecas.filter(rp => rp.revisaoId === id).map(rp => {
+                    const po = dados.pecas.find(p => p.id === rp.pecaId);
+                    return {
+                        pecaId: rp.pecaId, pecaNome: po ? po.nome : 'Peça',
+                        quantidade: rp.quantidade, valorUnitario: rp.valorUnitario, total: rp.total
+                    };
+                });
+                renderListaPecasRev();
+                atualizarTotalRev();
+                editando.revisao = id;
+            }
+            
+            function excluirRevisao(id) {
+                if(confirm("Eliminar revisão?")) {
+                    dados.revisoes = dados.revisoes.filter(r => r.id !== id);
+                    dados.revisaoPecas = dados.revisaoPecas.filter(p => p.revisaoId !== id);
+                    salvar();
+                    renderRevisoes();
+                }
+            }
+            
+            function limparRevisao() {
+                document.getElementById('revVeiculo').value = '';
+                document.getElementById('revData').value = new Date().toISOString().split('T')[0];
+                document.getElementById('revKm').value = '';
+                document.getElementById('revCustoMao').value = '';
+                document.getElementById('revProxKm').value = '';
+                document.getElementById('revLocal').value = '';
+                listaPecasRevTemp = [];
+                renderListaPecasRev();
+                atualizarTotalRev();
+                editando.revisao = null;
+            }
 
-            function addDespesa() {
+            // ========== REPAROS ==========
+            function atualizarTotalRep() {
+                const totalPecas = listaPecasRepTemp.reduce((s,p) => s + p.total, 0);
+                const servico = parseFloat(document.getElementById('repCusto')?.value) || 0;
+                document.getElementById('totalRep').innerHTML = `Total: ${formatarMoeda(totalPecas + servico)}`;
+            }
+            
+            function renderListaPecasRep() {
+                const container = document.getElementById('listaPecasRep');
+                if(!container) return;
+                if(listaPecasRepTemp.length === 0) {
+                    container.innerHTML = '<p style="color:#999">Nenhuma peça adicionada</p>';
+                    return;
+                }
+                container.innerHTML = listaPecasRepTemp.map((p,i) => `
+                    <div class="peca-item">
+                        <span>${p.pecaNome} x${p.quantidade} = ${formatarMoeda(p.total)}</span>
+                        <button class="danger small" data-action="removerPecaRep" data-idx="${i}">🗑️</button>
+                    </div>
+                `).join('');
+            }
+            
+            function addPecaRep() {
+                const pecaId = parseInt(document.getElementById('repPeca')?.value);
+                const qtd = parseFloat(document.getElementById('repQtd')?.value) || 1;
+                if(!pecaId) { alert("Selecione uma peça"); return; }
+                const peca = dados.pecas.find(p => p.id === pecaId);
+                if(peca) {
+                    listaPecasRepTemp.push({
+                        pecaId, pecaNome: peca.nome, quantidade: qtd,
+                        valorUnitario: peca.preco, total: peca.preco * qtd
+                    });
+                    renderListaPecasRep();
+                    atualizarTotalRep();
+                    document.getElementById('repPeca').value = '';
+                    document.getElementById('repQtd').value = '1';
+                }
+            }
+            
+            function renderReparos() {
+                const filtro = parseInt(document.getElementById('filtroRepVeiculo')?.value) || 0;
+                const tbody = document.querySelector('#tabelaReparos tbody');
+                if(!tbody) return;
+                const filtrados = dados.reparos.filter(r => filtro === 0 || r.veiculoId === filtro);
+                tbody.innerHTML = filtrados.map(r => {
+                    const v = dados.veiculos.find(v => v.id === r.veiculoId);
+                    return `<tr>
+                        <td>${r.data || '-'}</td>
+                        <td>${v ? v.placa : '-'}</td>
+                        <td>${r.tipo}</td>
+                        <td>${r.local || '-'}</td>
+                        <td>${formatarMoeda(r.custo)}</td>
+                        <td><button class="small" data-action="editarReparo" data-id="${r.id}">✏️</button><button class="danger small" data-action="excluirReparo" data-id="${r.id}">🗑️</button></td>
+                    </tr>`;
+                }).join('');
+            }
+            
+            function salvarReparo() {
+                const veiculoId = parseInt(document.getElementById('repVeiculo')?.value);
+                const tipo = document.getElementById('repTipo')?.value;
+                
+                if(!veiculoId || !tipo) {
+                    alert("Preencha veículo e tipo!");
+                    return;
+                }
+                
+                const totalPecas = listaPecasRepTemp.reduce((s,p) => s + p.total, 0);
+                const custoMao = parseFloat(document.getElementById('repCusto')?.value) || 0;
+                
+                const reparo = {
+                    veiculoId, tipo,
+                    custoMao, custoPecas: totalPecas, custo: custoMao + totalPecas,
+                    descricao: document.getElementById('repDescricao')?.value.trim() || '',
+                    local: document.getElementById('repLocal')?.value.trim() || '',
+                    data: new Date().toISOString().split('T')[0]
+                };
+                
+                if(editando.reparo) {
+                    const idx = dados.reparos.findIndex(r => r.id === editando.reparo);
+                    if(idx !== -1) {
+                        dados.reparos[idx] = { id: editando.reparo, ...reparo };
+                        dados.reparoPecas = dados.reparoPecas.filter(p => p.eventoId !== editando.reparo);
+                    }
+                    editando.reparo = null;
+                } else {
+                    reparo.id = ids.reparos++;
+                    dados.reparos.push(reparo);
+                    editando.reparo = reparo.id;
+                }
+                
+                listaPecasRepTemp.forEach(p => {
+                    dados.reparoPecas.push({
+                        id: Date.now() + Math.random(),
+                        eventoId: editando.reparo,
+                        pecaId: p.pecaId,
+                        quantidade: p.quantidade,
+                        valorUnitario: p.valorUnitario,
+                        total: p.total
+                    });
+                });
+                
+                editando.reparo = null;
+                salvar();
+                renderReparos();
+                limparReparo();
+                atualizarStatus("Reparo salvo!");
+            }
+            
+            function editarReparo(id) {
+                const r = dados.reparos.find(r => r.id === id);
+                if(!r) return;
+                document.getElementById('repVeiculo').value = r.veiculoId;
+                document.getElementById('repTipo').value = r.tipo;
+                document.getElementById('repCusto').value = r.custoMao;
+                document.getElementById('repDescricao').value = r.descricao || '';
+                document.getElementById('repLocal').value = r.local || '';
+                atualizarPecasContextuais();
+                
+                listaPecasRepTemp = dados.reparoPecas.filter(rp => rp.eventoId === id).map(rp => {
+                    const po = dados.pecas.find(p => p.id === rp.pecaId);
+                    return {
+                        pecaId: rp.pecaId, pecaNome: po ? po.nome : 'Peça',
+                        quantidade: rp.quantidade, valorUnitario: rp.valorUnitario, total: rp.total
+                    };
+                });
+                renderListaPecasRep();
+                atualizarTotalRep();
+                editando.reparo = id;
+            }
+            
+            function excluirReparo(id) {
+                if(confirm("Eliminar reparo?")) {
+                    dados.reparos = dados.reparos.filter(r => r.id !== id);
+                    dados.reparoPecas = dados.reparoPecas.filter(p => p.eventoId !== id);
+                    salvar();
+                    renderReparos();
+                }
+            }
+            
+            function limparReparo() {
+                document.getElementById('repVeiculo').value = '';
+                document.getElementById('repCusto').value = '';
+                document.getElementById('repDescricao').value = '';
+                document.getElementById('repLocal').value = '';
+                listaPecasRepTemp = [];
+                renderListaPecasRep();
+                atualizarTotalRep();
+                editando.reparo = null;
+            }
+
+            // ========== DESPESAS ==========
+            function renderDespesas() {
+                const filtro = parseInt(document.getElementById('filtroDesVeiculo')?.value) || 0;
+                const tbody = document.querySelector('#tabelaDespesas tbody');
+                if(!tbody) return;
+                const filtradas = dados.despesas.filter(d => filtro === 0 || d.veiculoId === filtro);
+                tbody.innerHTML = filtradas.map(d => {
+                    const v = dados.veiculos.find(v => v.id === d.veiculoId);
+                    return `<tr>
+                        <td>${d.data}</td>
+                        <td>${v ? v.placa : '-'}</td>
+                        <td>${d.tipo}</td>
+                        <td>${d.local || '-'}</td>
+                        <td>${formatarMoeda(d.valor)}</td>
+                        <td><button class="small" data-action="editarDespesa" data-id="${d.id}">✏️</button><button class="danger small" data-action="excluirDespesa" data-id="${d.id}">🗑️</button></td>
+                    </tr>`;
+                }).join('');
+            }
+            
+            function salvarDespesa() {
                 const veiculoId = parseInt(document.getElementById('desVeiculo')?.value);
                 const data = document.getElementById('desData')?.value;
-                const tipo = document.getElementById('desTipo')?.value;
                 const valor = parseFloat(document.getElementById('desValor')?.value);
-                const observacao = document.getElementById('desObservacao')?.value.trim() || '';
-                const local = document.getElementById('desLocal')?.value.trim() || '';
-
-                if(!veiculoId || !data || isNaN(valor)) { alert("Preencha veículo, data e um valor válido!"); return; }
-
-                if(editandoDespesaId) {
-                    const idx = dados.despesas.findIndex(d => d.id === editandoDespesaId);
-                    if(idx !== -1) dados.despesas[idx] = { id: editandoDespesaId, veiculoId, data, tipo, valor, observacao, local };
-                    editandoDespesaId = null; document.getElementById('btnSalvarDespesa').innerHTML = '💰 Registrar';
+                
+                if(!veiculoId || !data || isNaN(valor)) {
+                    alert("Preencha os campos obrigatórios!");
+                    return;
+                }
+                
+                const despesa = {
+                    veiculoId, data, valor,
+                    tipo: document.getElementById('desTipo')?.value,
+                    observacao: document.getElementById('desObservacao')?.value.trim() || '',
+                    local: document.getElementById('desLocal')?.value.trim() || ''
+                };
+                
+                if(editando.despesa) {
+                    const idx = dados.despesas.findIndex(d => d.id === editando.despesa);
+                    if(idx !== -1) dados.despesas[idx] = { id: editando.despesa, ...despesa };
+                    editando.despesa = null;
                 } else {
-                    dados.despesas.push({ id: ids.despesas++, veiculoId, data, tipo, valor, observacao, local });
+                    despesa.id = ids.despesas++;
+                    dados.despesas.push(despesa);
                 }
-                salvar(); renderDespesas(); limparDespesa(); atualizarStatus("Despesa salva!");
+                
+                salvar();
+                renderDespesas();
+                limparDespesa();
+                atualizarStatus("Despesa salva!");
             }
-
-            function editDespesa(id) {
-                const d = dados.despesas.find(des => des.id === id); if(!d) return;
-                document.getElementById('desVeiculo').value = d.veiculoId; document.getElementById('desData').value = d.data;
-                document.getElementById('desTipo').value = d.tipo; document.getElementById('desValor').value = d.valor;
-                document.getElementById('desObservacao').value = d.observacao || '';
-                document.getElementById('desLocal').value = d.local || '';
-                editandoDespesaId = id; document.getElementById('btnSalvarDespesa').innerHTML = '✏️ Atualizar Despesa';
-                acionarTabMobile("despesas");
+            
+            function editarDespesa(id) {
+                const d = dados.despesas.find(d => d.id === id);
+                if(d) {
+                    document.getElementById('desVeiculo').value = d.veiculoId;
+                    document.getElementById('desData').value = d.data;
+                    document.getElementById('desTipo').value = d.tipo;
+                    document.getElementById('desValor').value = d.valor;
+                    document.getElementById('desObservacao').value = d.observacao || '';
+                    document.getElementById('desLocal').value = d.local || '';
+                    editando.despesa = id;
+                }
             }
-
-            function delDespesa(id) {
-                if(confirm("Deseja eliminar esta despesa?")) { dados.despesas = dados.despesas.filter(d => d.id !== id); salvar(); renderDespesas(); }
+            
+            function excluirDespesa(id) {
+                if(confirm("Eliminar despesa?")) {
+                    dados.despesas = dados.despesas.filter(d => d.id !== id);
+                    salvar();
+                    renderDespesas();
+                }
             }
-
+            
             function limparDespesa() {
-                document.getElementById('desVeiculo').value = ''; document.getElementById('desData').value = new Date().toISOString().split('T')[0];
-                document.getElementById('desValor').value = ''; document.getElementById('desObservacao').value = ''; document.getElementById('desLocal').value = '';
-                editandoDespesaId = null; document.getElementById('btnSalvarDespesa').innerHTML = '💰 Registrar';
+                document.getElementById('desVeiculo').value = '';
+                document.getElementById('desData').value = new Date().toISOString().split('T')[0];
+                document.getElementById('desValor').value = '';
+                document.getElementById('desObservacao').value = '';
+                document.getElementById('desLocal').value = '';
+                editando.despesa = null;
             }
 
-            // DASHBOARDS & GLOBAL CONFIGS
+            // ========== DASHBOARD E UTILITÁRIOS ==========
             function atualizarDashboard() {
-                const totalGasto = dados.abastecimentos.reduce((s,a)=>s + (a.total||0),0);
-                const totalRevisoes = dados.revisoes.reduce((s,r)=>s + (r.custoTotal||0),0);
-                const grid = document.getElementById('statsGrid');
-                if(grid) {
-                    grid.innerHTML = `
-                        <div class="stat-card"><h3>${dados.veiculos.length}</h3><p>Veículos</p></div>
-                        <div class="stat-card"><h3>${dados.pecas.length}</h3><p>Peças</p></div>
-                        <div class="stat-card"><h3>${formatarMoeda(totalGasto)}</h3><p>Combustível</p></div>
-                        <div class="stat-card"><h3>${formatarMoeda(totalRevisoes)}</h3><p>Revisões</p></div>`;
-                }
-
-                // Tabela de Seguros no Dashboard
-                const tbodySeg = document.querySelector('#tabelaDashboardSeguros tbody'); 
-                if(tbodySeg) {
-                    tbodySeg.innerHTML = dados.seguros.map(s => { 
-                        const v = dados.veiculos.find(v=>v.id === s.veiculoId); 
+                const totalGasto = dados.abastecimentos.reduce((s,a)=> s + (a.total||0),0);
+                const totalRevisoes = dados.revisoes.reduce((s,r)=> s + (r.custoTotal||0),0);
+                document.getElementById('statsGrid').innerHTML = `
+                    <div class="stat-card"><h3>${dados.veiculos.length}</h3><p>Veículos</p></div>
+                    <div class="stat-card"><h3>${dados.pecas.length}</h3><p>Peças</p></div>
+                    <div class="stat-card"><h3>${formatarMoeda(totalGasto)}</h3><p>Combustível</p></div>
+                    <div class="stat-card"><h3>${formatarMoeda(totalRevisoes)}</h3><p>Revisões</p></div>
+                `;
+                
+                const tbody = document.querySelector('#tabelaDashboardSeguros tbody');
+                if(tbody) {
+                    tbody.innerHTML = dados.seguros.map(s => {
+                        const v = dados.veiculos.find(v => v.id === s.veiculoId);
                         return `<tr>
                             <td>${v ? v.placa : '-'}</td>
                             <td>${s.apolice || '-'}</td>
                             <td>${formatarMoeda(s.valorFranquia)}</td>
-                            <td style="font-size:11px;">E: ${s.contatoEmergencia || '-'}<br>D: ${s.despachanteContato || '-'}</td>
+                            <td>${s.contatoEmergencia || '-'}<br>${s.despachanteContato || '-'}</td>
                             <td>${s.cpfSegurado || '-'}</td>
-                        </tr>`; 
+                        </tr>`;
                     }).join('');
-                    if(dados.seguros.length === 0) tbodySeg.innerHTML = '<tr><td colspan="5" style="text-align:center;">Nenhum seguro cadastrado</td></tr>';
+                    if(dados.seguros.length === 0) tbody.innerHTML = '<tr><td colspan="5">Nenhum seguro<th></tr>';
                 }
             }
-
+            
             function carregarAlertas() {
-                const hoje = new Date(); const container = document.getElementById('alertasLista'); if(!container) return;
-                
+                const container = document.getElementById('alertasLista');
+                if(!container) return;
+                if(dados.veiculos.length === 0) {
+                    container.innerHTML = '<p>Nenhum veículo cadastrado</p>';
+                    return;
+                }
                 container.innerHTML = dados.veiculos.map(v => {
-                    const kmsAbast = dados.abastecimentos.filter(a => a.veiculoId === v.id).map(a => a.km);
-                    const kmsRev = dados.revisoes.filter(r => r.veiculoId === v.id).map(r => r.km);
-                    const kmAtual = Math.max(0, ...kmsAbast, ...kmsRev);
                     const ultRev = [...dados.revisoes].filter(r=>r.veiculoId===v.id).sort((a,b)=>b.data.localeCompare(a.data))[0];
-                    
-                    let statusMsgs = [];
-                    let isDanger = false;
-                    let isWarning = false;
-
-                    if(ultRev) {
-                        if(ultRev.proxKm) {
-                            const diff = ultRev.proxKm - kmAtual;
-                            if(diff <= 0) { 
-                                statusMsgs.push(`⚠️ KM EXCEDIDO! (${kmAtual}km / Limite: ${ultRev.proxKm}km)`); 
-                                isDanger = true; 
-                            } else if(diff <= 1000) { 
-                                statusMsgs.push(`🔴 KM PRÓXIMO! (Faltam ${diff} km para a revisão)`); 
-                                isWarning = true; 
-                            }
-                        }
-                        
-                        if(ultRev.proxData) {
-                            const diasRestantes = Math.ceil((new Date(ultRev.proxData + 'T00:00:00') - hoje) / (1000*60*60*24));
-                            if(diasRestantes < 0) { 
-                                statusMsgs.push(`⚠️ DATA EXCEDIDA! (Vencida há ${Math.abs(diasRestantes)} dias)`); 
-                                isDanger = true; 
-                            } else if(diasRestantes <= 30) { 
-                                statusMsgs.push(`🔴 DATA PRÓXIMA! (Faltam ${diasRestantes} dias para a revisão)`); 
-                                isWarning = true; 
-                            }
-                        }
-                    } else { 
-                        statusMsgs.push("ℹ️ Nenhuma revisão programada."); 
-                    }
-
-                    if(statusMsgs.length === 0) {
-                        statusMsgs.push("✅ Tudo em dia com as revisões.");
-                    }
-
-                    let classe = '';
-                    if(isDanger) classe = 'alert-danger';
-                    else if(isWarning) classe = 'alert-warning';
-
-                    return `<div class="alert-item ${classe}">
-                        <strong style="font-size:1.1em">${v.placa}</strong> - ${v.marca} ${v.modelo}
-                        <div style="margin-top:6px; font-size:13px; line-height:1.5;">${statusMsgs.join('<br>')}</div>
-                    </div>`;
+                    let msg = ultRev ? `Última revisão: ${ultRev.data} (${ultRev.km}km)` : "Sem revisões registradas";
+                    return `<div class="alert-item"><strong>${v.placa}</strong> - ${v.marca} ${v.modelo}<br>${msg}</div>`;
                 }).join('');
             }
-
-            function exportarDados() { 
-                const blob = new Blob([JSON.stringify(dados,null,2)], {type : 'application/json'});
-                const a = document.createElement('a'); a.href = URL.createObjectURL(blob); 
-                a.download = `frota_${new Date().toISOString().split('T')[0]}.json`; a.click(); 
+            
+            function atualizarEstatisticas() {
+                document.getElementById('statVeiculos').innerText = dados.veiculos.length;
+                document.getElementById('statSeguros').innerText = dados.seguros.length;
+                document.getElementById('statPecas').innerText = dados.pecas.length;
+                document.getElementById('statAbast').innerText = dados.abastecimentos.length;
+                document.getElementById('statRev').innerText = dados.revisoes.length;
+                document.getElementById('statReparos').innerText = dados.reparos.length;
+                document.getElementById('statDespesas').innerText = dados.despesas.length;
             }
-
-            // CORREÇÃO: Garante o recálculo dos IDs ao importar um JSON
-            function importarDados(file) { 
-                const r = new FileReader(); r.onload = ev => { 
-                    try { 
-                        const imp = JSON.parse(ev.target.result); 
-                        dados = { ...dados, ...imp }; 
-                        
+            
+            function atualizarCombos() {
+                const veicHtml = '<option value="">Selecione...</option>' + dados.veiculos.map(v => `<option value="${v.id}">${v.placa} - ${v.marca}</option>`).join('');
+                const filtroHtml = '<option value="0">⭐ Todos</option>' + dados.veiculos.map(v => `<option value="${v.id}">${v.placa}</option>`).join('');
+                const pecaHtml = '<option value="0">⚙️ Geral (qualquer veículo)</option>' + dados.veiculos.map(v => `<option value="${v.id}">${v.placa} - ${v.marca}</option>`).join('');
+                
+                ['abVeiculo','revVeiculo','repVeiculo','desVeiculo','segVeiculo'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) el.innerHTML = veicHtml;
+                });
+                ['filtroSegVeiculo','filtroPecasVeiculo','filtroAbastVeiculo','filtroRevVeiculo','filtroRepVeiculo','filtroDesVeiculo'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) el.innerHTML = filtroHtml;
+                });
+                const pVeic = document.getElementById('pVeiculoId');
+                if(pVeic) pVeic.innerHTML = pecaHtml;
+            }
+            
+            function exportarDados() {
+                const blob = new Blob([JSON.stringify(dados, null, 2)], {type: 'application/json'});
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = `frota_${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                atualizarStatus("Backup exportado!");
+            }
+            
+            function importarDados(file) {
+                const r = new FileReader();
+                r.onload = ev => {
+                    try {
+                        const imp = JSON.parse(ev.target.result);
+                        dados = { ...dados, ...imp };
                         for(let k in ids) {
                             if(dados[k] && dados[k].length) {
                                 ids[k] = Math.max(...dados[k].map(i => Number(i.id) || 0)) + 1;
                             }
                         }
-                        
-                        salvar(); renderTudo(); 
-                    } catch(err) { alert("Ficheiro inválido."); } 
-                }; r.readAsText(file); 
+                        salvar();
+                        renderTudo();
+                        atualizarStatus("Dados importados!");
+                    } catch(err) { 
+                        alert("Arquivo inválido!"); 
+                    }
+                };
+                r.readAsText(file);
             }
-
-            function limparDados() { 
-                if(confirm("⚠️ Limpar tudo?")) { 
-                    localStorage.removeItem('gestorFrota2'); 
+            
+            function limparTudo() {
+                if(confirm("⚠️ Limpar TODOS os dados? Esta ação NÃO pode ser desfeita!")) {
+                    localStorage.removeItem('gestorFrota2');
                     dados = { veiculos: [], seguros: [], pecas: [], abastecimentos: [], revisoes: [], revisaoPecas: [], reparos: [], reparoPecas: [], despesas: [] };
-                    ids = { veiculos: 1, seguros: 1, pecas: 1, abastecimentos: 1, revisoes: 1, reparos: 1, despesas: 1 };
-                    salvar(); renderTudo(); 
-                } 
+                    dados.veiculos = [{ id:1, marca:"Volkswagen", modelo:"Gol", ano:2020, cor:"Prata", placa:"ABC-1234", chassi:"9BW123456", dataCompra:"2020-01-15", valorCompra:45000, renavam:"123456789", local:"Concessionária", arquivos:[] }];
+                    dados.pecas = [{ id:1, veiculoId:0, nome:"Óleo do Motor", marca:"Shell", preco:45.90, local:"Auto Peças" }];
+                    ids = { veiculos: 2, seguros: 1, pecas: 2, abastecimentos: 1, revisoes: 1, reparos: 1, despesas: 1 };
+                    salvar();
+                    renderTudo();
+                }
             }
 
-            function atualizarEstatisticas() { 
-                document.getElementById('statVeiculos').innerText = dados.veiculos.length; document.getElementById('statPecas').innerText = dados.pecas.length; 
-                document.getElementById('statAbast').innerText = dados.abastecimentos.length; document.getElementById('statRev').innerText = dados.revisoes.length; 
-                document.getElementById('statReparos').innerText = dados.reparos.length; document.getElementById('statDespesas').innerText = dados.despesas.length;
-                document.getElementById('statSeguros').innerText = dados.seguros.length;
-            }
-
-            function atualizarCombos() {
-                const veicHtml = '<option value="">Seleccione...</option>' + dados.veiculos.map(v => `<option value="${v.id}">${v.placa} - ${v.marca} ${v.modelo}</option>`).join('');
-                const filtroHtml = '<option value="0">⭐ Todos os Veículos</option>' + dados.veiculos.map(v => `<option value="${v.id}">${v.placa} - ${v.modelo}</option>`).join('');
-                const pecaVeicCadastroHtml = '<option value="0">⚙️ Geral / Multi-veículo</option>' + dados.veiculos.map(v => `<option value="${v.id}">${v.placa} - ${v.marca}</option>`).join('');
-
-                ['abVeiculo','revVeiculo','repVeiculo','desVeiculo','segVeiculo'].forEach(id => { const s = document.getElementById(id); if(s) s.innerHTML = veicHtml; });
-                ['filtroPecasVeiculo', 'filtroAbastVeiculo', 'filtroRevVeiculo', 'filtroRepVeiculo', 'filtroDesVeiculo', 'filtroSegVeiculo'].forEach(id => { const s = document.getElementById(id); if(s) s.innerHTML = filtroHtml; });
+            // ========== EVENTOS ==========
+            document.addEventListener('click', (e) => {
+                const btn = e.target.closest('[data-action]');
+                if(!btn) return;
                 
-                const pVeic = document.getElementById('pVeiculoId'); if(pVeic) pVeic.innerHTML = pecaVeicCadastroHtml;
-            }
-
-            function acionarTabMobile(tabId) {
-                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-                const alvo = document.getElementById(tabId); if(alvo) alvo.classList.add('active');
-                document.querySelectorAll('.tab-btn').forEach(b => {
-                    if(b.getAttribute('data-tab') === tabId) b.classList.add('active'); else b.classList.remove('active');
-                });
-                if(tabId === 'alertas') carregarAlertas();
-            }
-
-            // TELEPHONE DELEGATION EVENT
-            document.addEventListener('click', function(e) {
-                const target = e.target.closest('[data-action]'); if(!target) return;
-                const action = target.getAttribute('data-action');
-                const id = parseInt(target.getAttribute('data-id')); const idx = parseInt(target.getAttribute('data-idx'));
-
-                if(action === 'mudarTab') acionarTabMobile(target.getAttribute('data-tab'));
-                if(action === 'salvarVeiculo') addVeiculo();
-                if(action === 'limparVeiculoForm') limparVeiculo();
-                if(action === 'salvarSeguro') addSeguro();
-                if(action === 'limparSeguroForm') limparSeguro();
-                if(action === 'salvarPeca') addPeca();
-                if(action === 'limparPecaForm') limparPeca();
-                if(action === 'salvarAbastecimento') addAbastecimento();
-                if(action === 'limparAbastecimentoForm') limparAbastecimento();
-                if(action === 'adicionarPecaRevisao') addPecaRev();
-                if(action === 'salvarRevisao') addRevisao();
-                if(action === 'limparRevisaoForm') limparRevisao();
-                if(action === 'adicionarPecaReparo') addPecaRep();
-                if(action === 'salvarReparo') addReparo();
-                if(action === 'limparReparoForm') limparReparo();
-                if(action === 'salvarDespesa') addDespesa();
-                if(action === 'limparDespesaForm') limparDespesa();
+                const action = btn.getAttribute('data-action');
+                const id = parseInt(btn.getAttribute('data-id'));
+                const idx = parseInt(btn.getAttribute('data-idx'));
                 
-                if(action === 'verDetalhesVeiculo') verDetalhesVeiculo(id);
-                if(action === 'editVeiculo') editVeiculo(id);
-                if(action === 'delVeiculo') delVeiculo(id);
-                if(action === 'editSeguro') editSeguro(id);
-                if(action === 'delSeguro') delSeguro(id);
-                if(action === 'editPeca') editPeca(id);
-                if(action === 'delPeca') delPeca(id);
-                if(action === 'editAbast') editAbastecimento(id);
-                if(action === 'delAbast') delAbastecimento(id);
-                if(action === 'editRevisao') editRevisao(id);
-                if(action === 'removePecaRev') { listaPecasTemp.splice(idx,1); renderListaPecasRev(); atualizarTotalRev(); }
-                if(action === 'verPecasRev') verPecasRev(id); // CORREÇÃO: Ação incluída aqui
-                if(action === 'delRevisao') delRevisao(id);
-                if(action === 'editReparo') editReparo(id);
-                if(action === 'removePecaRep') { listaPecasRepTemp.splice(idx,1); renderListaPecasRep(); atualizarTotalRep(); }
-                if(action === 'verDetalhesRep') verDetalhesRep(id);
-                if(action === 'delReparo') delReparo(id);
-                if(action === 'editDespesa') editDespesa(id);
-                if(action === 'delDespesa') delDespesa(id);
+                if(action === 'mudarTab') {
+                    const tabId = btn.getAttribute('data-tab');
+                    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                    document.getElementById(tabId)?.classList.add('active');
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    if(tabId === 'alertas') carregarAlertas();
+                }
+                
+                if(action === 'salvarVeiculo') salvarVeiculo();
+                if(action === 'limparVeiculo') limparVeiculo();
+                if(action === 'editarVeiculo') editarVeiculo(id);
+                if(action === 'verVeiculo') verVeiculo(id);
+                if(action === 'excluirVeiculo') excluirVeiculo(id);
+                
+                if(action === 'salvarSeguro') salvarSeguro();
+                if(action === 'editarSeguro') editarSeguro(id);
+                if(action === 'excluirSeguro') excluirSeguro(id);
+                if(action === 'filtrarSeguros') renderSeguros();
+                
+                if(action === 'salvarPeca') salvarPeca();
+                if(action === 'limparPeca') limparPeca();
+                if(action === 'editarPeca') editarPeca(id);
+                if(action === 'excluirPeca') excluirPeca(id);
+                if(action === 'filtrarPecas') renderPecas();
+                
+                if(action === 'salvarAbastecimento') salvarAbastecimento();
+                if(action === 'editarAbast') editarAbastecimento(id);
+                if(action === 'excluirAbast') excluirAbastecimento(id);
+                if(action === 'filtrarAbastecimentos') renderAbastecimentos();
+                
+                if(action === 'salvarRevisao') salvarRevisao();
+                if(action === 'editarRevisao') editarRevisao(id);
+                if(action === 'excluirRevisao') excluirRevisao(id);
+                if(action === 'filtrarRevisoes') renderRevisoes();
+                if(action === 'addPecaRev') addPecaRev();
+                if(action === 'removerPecaRev') { listaPecasRevTemp.splice(idx,1); renderListaPecasRev(); atualizarTotalRev(); }
+                
+                if(action === 'salvarReparo') salvarReparo();
+                if(action === 'editarReparo') editarReparo(id);
+                if(action === 'excluirReparo') excluirReparo(id);
+                if(action === 'filtrarReparos') renderReparos();
+                if(action === 'addPecaRep') addPecaRep();
+                if(action === 'removerPecaRep') { listaPecasRepTemp.splice(idx,1); renderListaPecasRep(); atualizarTotalRep(); }
+                
+                if(action === 'salvarDespesa') salvarDespesa();
+                if(action === 'editarDespesa') editarDespesa(id);
+                if(action === 'excluirDespesa') excluirDespesa(id);
+                if(action === 'filtrarDespesas') renderDespesas();
+                
+                if(action === 'exportarDados') exportarDados();
+                if(action === 'limparTudo') limparTudo();
+                if(action === 'importarDados') {
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = '.json';
+                    input.onchange = (e) => { if(e.target.files[0]) importarDados(e.target.files[0]); };
+                    input.click();
+                }
+                
+                if(action === 'removerArquivoTemp') { listaArquivosTemp.splice(idx,1); renderListaArquivosForm(); }
+                if(action === 'excluirArquivo') {
+                    const veiculoId = parseInt(btn.getAttribute('data-veiculo-id'));
+                    const arquivoId = parseFloat(btn.getAttribute('data-arquivo-id'));
+                    const v = dados.veiculos.find(ve => ve.id === veiculoId);
+                    if(v && v.arquivos) {
+                        v.arquivos = v.arquivos.filter(arq => arq.id !== arquivoId);
+                        salvar();
+                        verVeiculo(veiculoId);
+                    }
+                }
                 
                 if(action === 'fecharModalPecas') document.getElementById('modalPecas').style.display = 'none';
                 if(action === 'fecharModalReparos') document.getElementById('modalReparos').style.display = 'none';
                 if(action === 'fecharModalVeiculo') document.getElementById('modalVeiculoDetalhes').style.display = 'none';
-                if(action === 'exportarDados') exportarDados();
-                if(action === 'limparDadosTodos') limparDados();
-                if(action === 'acionarImportador') {
-                    const input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
-                    input.onchange = ev => { if(ev.target.files[0]) importarDados(ev.target.files[0]); }; input.click();
-                }
-
-                if(action === 'salvarConfig') {
-                    urlServidorDrive = document.getElementById('configUrlDrive').value.trim();
-                    localStorage.setItem('urlServidorDrive', urlServidorDrive);
-                    atualizarStatus("Configurações salvas!");
-                }
-                if(action === 'removerArquivoTemp') {
-                    listaArquivosTemp.splice(idx, 1);
-                    renderListaArquivosForm();
-                }
-                if(action === 'excluirArquivoObjeto') {
-                    const veiculoId = parseInt(target.getAttribute('data-veiculo-id'));
-                    const arquivoId = parseFloat(target.getAttribute('data-arquivo-id'));
-                    if(confirm("Deseja remover este anexo do veículo?")) {
-                        const v = dados.veiculos.find(ve => ve.id === veiculoId);
-                        if(v && v.arquivos) {
-                            v.arquivos = v.arquivos.filter(arq => arq.id !== arquivoId);
-                            salvar();
-                            verDetalhesVeiculo(veiculoId);
-                        }
-                    }
-                }
             });
-
-            document.addEventListener('change', function(e) {
-                const action = e.target.getAttribute('data-action');
-                if(action === 'filtrarTabelaPecas') renderPecas();
-                if(action === 'filtrarTabelaAbast') renderAbastecimentos();
-                if(action === 'filtrarTabelaRev') renderRevisoes();
-                if(action === 'filtrarTabelaRep') renderReparos();
-                if(action === 'filtrarTabelaDes') renderDespesas();
-                if(action === 'filtrarTabelaSeguros') renderSeguros();
-                if(action === 'atualizarPecasContextuaisRev') { atualizarPecasContextuaisRev(); atualizarTotalRev(); }
-                if(action === 'atualizarPecasContextuaisRep') { atualizarPecasContextuaisRep(); atualizarTotalRep(); }
-
-                if(action === 'processarArquivoDrive') {
-                    const file = e.target.files[0];
-                    if(!file) return;
-
-                    if(!urlServidorDrive) {
-                        alert("⚠️ Por favor, cole a URL do seu Google Apps Script na aba '⚙️ Config.' antes de enviar arquivos.");
-                        e.target.value = '';
-                        return;
-                    }
-
-                    const containerForm = document.getElementById('listaArquivosForm');
-                    if (containerForm) {
-                        containerForm.innerHTML += `<div id="statusUploadTemp" style="color:#764ba2; font-size:12px; margin-top:5px; font-weight:bold;">⏳ Enviando "${file.name}" para o seu Drive...</div>`;
-                    }
-                    
-                    const btnSalvar = document.getElementById('btnSalvarVeiculo');
-                    if(btnSalvar) { btnSalvar.disabled = true; btnSalvar.style.opacity = '0.5'; }
-
-                    const reader = new FileReader();
-                    reader.onload = async (evento) => {
-                        const base64Data = evento.target.result;
-                        try {
-                            const response = await fetch(urlServidorDrive, {
-                                method: 'POST',
-                                body: JSON.stringify({
-                                    fileName: file.name,
-                                    mimeType: file.type,
-                                    base64: base64Data
-                                })
-                            });
-                            const result = await response.json();
-                            if(result.success) {
-                                listaArquivosTemp.push({
-                                    id: Date.now() + Math.random(),
-                                    nome: file.name,
-                                    url: result.url
-                                });
-                                renderListaArquivosForm();
-                                atualizarStatus("Arquivo adicionado!");
-                            } else {
-                                throw new Error(result.error);
-                            }
-                        } catch (error) {
-                            alert("❌ Erro técnico: " + error.message + "\n\nVerifique se a URL do Script está correta e se o Web App tem permissão de 'Qualquer pessoa'.");
-console.error("Detalhes do erro:", error);
-                            renderListaArquivosForm();
-                        } finally {
-                            if(btnSalvar) { btnSalvar.disabled = false; btnSalvar.style.opacity = '1'; }
-                            e.target.value = '';
-                        }
-                    };
-                    reader.readAsDataURL(file);
-                }
+            
+            document.getElementById('vDocumento')?.addEventListener('change', (e) => {
+                if(e.target.files[0]) processarArquivo(e.target.files[0]);
+                e.target.value = '';
             });
-
-            document.getElementById('revData')?.addEventListener('change', calcProxData);
+            
             document.getElementById('revCustoMao')?.addEventListener('input', atualizarTotalRev);
             document.getElementById('repCusto')?.addEventListener('input', atualizarTotalRep);
-
-            carregar(); renderTudo();
-            (() => { 
-                const hoje = new Date().toISOString().split('T')[0]; 
-                document.querySelectorAll('input[type="date"]').forEach(i => { if(!i.value) i.value = hoje; }); 
-                calcProxData(); 
-            })();
+            document.getElementById('revVeiculo')?.addEventListener('change', atualizarPecasContextuais);
+            document.getElementById('repVeiculo')?.addEventListener('change', atualizarPecasContextuais);
+            
+            carregar();
+            renderTudo();
+            
+            const hoje = new Date().toISOString().split('T')[0];
+            document.querySelectorAll('input[type="date"]').forEach(i => { if(!i.value) i.value = hoje; });
         })();
     </script>
 </body>
