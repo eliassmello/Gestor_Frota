@@ -45,11 +45,26 @@
         .detalhe-bloco { margin-bottom: 12px; font-size: 14px; }
         .secao-titulo { border-top: 2px dashed #667eea; margin-top: 20px; padding-top: 15px; color: #667eea; font-size: 1.1em; }
         .filter-box { background: #f1f3f9; padding: 12px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid #667eea; }
-        .arquivo-preview { display: flex; align-items: center; gap: 10px; background: #f5f5f5; padding: 8px; border-radius: 8px; margin-bottom: 6px; }
-        .arquivo-preview img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; cursor: pointer; }
-        .arquivo-preview a { color: #667eea; text-decoration: none; flex: 1; word-break: break-all; font-size: 12px; cursor: pointer; }
         .form-cadastro { background: #f8f9fa; padding: 15px; border-radius: 16px; margin-bottom: 20px; border: 1px solid #e0e0e0; }
         .form-cadastro h3 { color: #667eea; margin-bottom: 15px; font-size: 1.1em; }
+        .dropzone { border: 1.5px dashed #bcc3e0; border-radius: 12px; padding: 18px; text-align: center; background: #f8f9fb; cursor: pointer; transition: .15s; }
+        .dropzone:hover, .dropzone.drag { border-color: #667eea; background: #eef0fb; }
+        .dropzone .dz-ic { font-size: 1.6em; }
+        .dropzone .dz-t { font-weight: 600; margin-top: 4px; font-size: 14px; color: #333; }
+        .dropzone .dz-s { font-size: 12px; color: #999; margin-top: 2px; }
+        .anexo-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+        .anexo-item { display: flex; align-items: center; gap: 12px; background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 10px; padding: 9px 12px; }
+        .anexo-item .preview { width: 42px; height: 42px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #e8eef3; font-size: 1.2em; overflow: hidden; }
+        .anexo-item .preview img { width: 100%; height: 100%; object-fit: cover; }
+        .anexo-item .meta { flex: 1; min-width: 0; }
+        .anexo-item .meta .nm { font-weight: 600; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #333; }
+        .anexo-item .meta .sz { font-size: 11px; color: #999; }
+        .anexo-item .acts { display: flex; gap: 4px; flex-shrink: 0; }
+        .anexo-item .acts button { margin: 0; }
+        .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.85); align-items: center; justify-content: center; z-index: 2000; padding: 30px; }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 95%; max-height: 90vh; border-radius: 8px; box-shadow: 0 10px 50px rgba(0,0,0,.6); }
+        .lightbox .close { position: absolute; top: 20px; right: 28px; color: #fff; font-size: 2em; cursor: pointer; background: none; border: none; margin: 0; }
     </style>
 </head>
 <body>
@@ -105,9 +120,14 @@
             <div class="form-group"><label>Local Compra</label><input type="text" id="vLocal"></div>
             
             <div class="form-group">
-                <label>📄 Anexar Documentos</label>
-                <input type="file" id="vDocumento" accept="image/*,application/pdf">
-                <div id="listaArquivosForm" style="margin-top: 10px;"></div>
+                <label>📄 Documentos Anexados</label>
+                <div class="dropzone" id="dropzoneVeiculo">
+                    <div class="dz-ic">📎</div>
+                    <div class="dz-t">Clique ou arraste arquivos aqui</div>
+                    <div class="dz-s">CRLV, nota fiscal, fotos — PDF, JPG, PNG…</div>
+                    <input type="file" id="vDocumento" multiple accept="image/*,application/pdf,.jpg,.jpeg,.png,.webp,.txt,.doc,.docx" style="display:none">
+                </div>
+                <div id="listaArquivosForm" class="anexo-list"></div>
             </div>
 
             <div class="button-group">
@@ -229,8 +249,14 @@
         <div id="backup" class="tab-content">
             <div style="text-align:center">
                 <h3>💾 Backup</h3>
+                <p style="font-size:12px;color:#666;margin:8px auto 4px;max-width:420px;text-align:left;background:#fff3cd;color:#664d03;padding:10px 12px;border-radius:10px;">
+                    🔒 <strong>Protegido (.pib)</strong>: comprimido (menor, ideal com muitas fotos) e criptografado por senha.
+                    <strong>.json</strong>: texto simples. A importação reconhece os dois formatos automaticamente.
+                    Se usar senha e esquecê-la, não há recuperação.
+                </p>
                 <div class="button-group" style="justify-content:center">
-                    <button data-action="exportarDados">📤 Exportar</button>
+                    <button data-action="exportarDadosProtegido">🔒 Exportar protegido (.pib)</button>
+                    <button data-action="exportarDados" class="secondary">📤 Exportar .json</button>
                     <button data-action="importarDados">📥 Importar</button>
                     <button data-action="limparTudo" class="danger">⚠️ Limpar Tudo</button>
                 </div>
@@ -250,6 +276,7 @@
     <div id="modalPecas" class="modal"><div class="modal-content"><h3>Peças</h3><div id="modalLista"></div><button data-action="fecharModalPecas">Fechar</button></div></div>
     <div id="modalReparos" class="modal"><div class="modal-content"><h3>Detalhes</h3><div id="modalRepConteudo"></div><button data-action="fecharModalReparos">Fechar</button></div></div>
     <div id="modalVeiculoDetalhes" class="modal"><div class="modal-content"><h3>Detalhes do Veículo</h3><div id="modalVeicConteudo"></div><button data-action="fecharModalVeiculo">Fechar</button></div></div>
+    <div id="lightbox" class="lightbox"><button class="close" id="lbClose">×</button><img id="lbImg" src="" alt=""></div>
 
     <script>
         (function(){
@@ -266,7 +293,29 @@
             let listaArquivosTemp = [];
 
             const formatarMoeda = (v) => (v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            
+
+            // ===== Helpers de anexos (compatível com formato antigo {nome,tipo,base64} e novo {name,type,size,dataURL}) =====
+            const escHtml = (s) => { if(s===0) return '0'; if(!s) return ''; return String(s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); };
+            const formatarBytes = (n) => { if(!n) return ''; if(n<1024) return n+' B'; if(n<1048576) return (n/1024).toFixed(0)+' KB'; return (n/1048576).toFixed(1)+' MB'; };
+            const anexoURL = (a) => a.dataURL || a.base64 || '';
+            const anexoNome = (a) => a.name || a.nome || 'arquivo';
+            const anexoTipo = (a) => a.type || a.tipo || '';
+            const ehImagem = (t) => (t || '').startsWith('image/');
+            function dataURLtoBlob(dataURL) {
+                const [head, b64] = dataURL.split(',');
+                const mime = (head.match(/:(.*?);/) || [])[1] || 'application/octet-stream';
+                const bin = atob(b64); const len = bin.length; const arr = new Uint8Array(len);
+                for(let i=0;i<len;i++) arr[i] = bin.charCodeAt(i);
+                return new Blob([arr], { type: mime });
+            }
+            function openAnexo(a) {
+                if(!a || !anexoURL(a)) { atualizarStatus('Arquivo indisponível'); return; }
+                const url = anexoURL(a);
+                if(ehImagem(anexoTipo(a))) { document.getElementById('lbImg').src = url; document.getElementById('lightbox').classList.add('active'); return; }
+                try { const obj = URL.createObjectURL(dataURLtoBlob(url)); window.open(obj, '_blank'); setTimeout(() => URL.revokeObjectURL(obj), 60000); }
+                catch(e) { window.open(url, '_blank'); }
+            }
+
             function atualizarStatus(msg) { 
                 const sb = document.getElementById('statusBar');
                 if(sb) sb.innerHTML = `✅ ${msg}`; 
@@ -352,38 +401,38 @@
                 const container = document.getElementById('listaArquivosForm');
                 if(!container) return;
                 if(listaArquivosTemp.length === 0) {
-                    container.innerHTML = '<p style="color:#999">Nenhum arquivo selecionado</p>';
+                    container.innerHTML = '';
                     return;
                 }
-                container.innerHTML = listaArquivosTemp.map((arq, idx) => `
-                    <div class="arquivo-preview">
-                        ${arq.tipo && arq.tipo.startsWith('image/') ? `<img src="${arq.base64}" onclick="window.open('${arq.base64}', '_blank')">` : '<span>📄</span>'}
-                        <a href="#" onclick="window.open('${arq.base64}', '_blank'); return false;">${arq.nome}</a>
-                        <button class="danger small" data-action="removerArquivoTemp" data-idx="${idx}">🗑️</button>
+                container.innerHTML = listaArquivosTemp.map((a, idx) => `
+                    <div class="anexo-item">
+                        <div class="preview">${ehImagem(anexoTipo(a)) && anexoURL(a) ? `<img src="${anexoURL(a)}" alt="">` : '📄'}</div>
+                        <div class="meta">
+                            <div class="nm">${escHtml(anexoNome(a))}</div>
+                            <div class="sz">${escHtml((anexoTipo(a).split('/')[1]) || '')} ${formatarBytes(a.size)}</div>
+                        </div>
+                        <div class="acts">
+                            <button class="small secondary" data-action="verArquivoTemp" data-idx="${idx}">👁️</button>
+                            <button class="danger small" data-action="removerArquivoTemp" data-idx="${idx}">🗑️</button>
+                        </div>
                     </div>
                 `).join('');
             }
 
-            function arquivoParaBase64(file) {
-                return new Promise((resolve, reject) => {
+            function filesToBase64(fileList) {
+                return Promise.all(Array.from(fileList).map(file => new Promise(resolve => {
                     const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
+                    reader.onload = e => resolve({ name: file.name, type: file.type, size: file.size, dataURL: e.target.result });
                     reader.readAsDataURL(file);
-                });
+                })));
             }
 
-            async function processarArquivo(file) {
-                if(!file) return;
-                const base64 = await arquivoParaBase64(file);
-                listaArquivosTemp.push({
-                    id: Date.now() + Math.random(),
-                    nome: file.name,
-                    tipo: file.type,
-                    base64: base64
-                });
+            async function adicionarArquivos(fileList) {
+                if(!fileList || !fileList.length) return;
+                const novos = await filesToBase64(fileList);
+                listaArquivosTemp = listaArquivosTemp.concat(novos);
                 renderListaArquivosForm();
-                atualizarStatus(`Arquivo "${file.name}" adicionado`);
+                atualizarStatus(`${novos.length} arquivo(s) anexado(s)`);
             }
 
             function salvarVeiculo() {
@@ -461,13 +510,19 @@
                 
                 let htmlArquivos = '';
                 if(v.arquivos && v.arquivos.length > 0) {
-                    htmlArquivos = '<h4>📄 Documentos:</h4>' + v.arquivos.map(arq => `
-                        <div class="arquivo-preview">
-                            ${arq.tipo && arq.tipo.startsWith('image/') ? `<img src="${arq.base64}" onclick="window.open('${arq.base64}', '_blank')">` : '<span>📄</span>'}
-                            <a href="#" onclick="window.open('${arq.base64}', '_blank'); return false;">${arq.nome}</a>
-                            <button class="danger small" data-action="excluirArquivo" data-veiculo-id="${v.id}" data-arquivo-id="${arq.id}">🗑️</button>
+                    htmlArquivos = '<h4>📄 Documentos:</h4><div class="anexo-list">' + v.arquivos.map((a, idx) => `
+                        <div class="anexo-item">
+                            <div class="preview">${ehImagem(anexoTipo(a)) && anexoURL(a) ? `<img src="${anexoURL(a)}" alt="">` : '📄'}</div>
+                            <div class="meta">
+                                <div class="nm">${escHtml(anexoNome(a))}</div>
+                                <div class="sz">${escHtml((anexoTipo(a).split('/')[1]) || '')} ${formatarBytes(a.size)}</div>
+                            </div>
+                            <div class="acts">
+                                <button class="small secondary" data-action="verArquivoVeiculo" data-veiculo-id="${v.id}" data-idx="${idx}">👁️</button>
+                                <button class="danger small" data-action="excluirArquivoVeiculo" data-veiculo-id="${v.id}" data-idx="${idx}">🗑️</button>
+                            </div>
                         </div>
-                    `).join('');
+                    `).join('') + '</div>';
                 } else {
                     htmlArquivos = '<p>Nenhum documento</p>';
                 }
@@ -1234,34 +1289,88 @@
                 if(pVeic) pVeic.innerHTML = pecaHtml;
             }
             
-            function exportarDados() {
-                const blob = new Blob([JSON.stringify(dados, null, 2)], {type: 'application/json'});
+            // ===== Backup: compressão (gzip nativo) + criptografia (AES-GCM/PBKDF2) =====
+            function baixarArquivo(blob, nome) {
                 const a = document.createElement('a');
                 a.href = URL.createObjectURL(blob);
-                a.download = `frota_${new Date().toISOString().split('T')[0]}.json`;
+                a.download = nome;
                 a.click();
+                setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+            }
+            const _temGzip = typeof CompressionStream !== 'undefined' && typeof DecompressionStream !== 'undefined';
+            async function _gzip(u8) { const cs = new CompressionStream('gzip'); const w = cs.writable.getWriter(); w.write(u8); w.close(); return new Uint8Array(await new Response(cs.readable).arrayBuffer()); }
+            async function _gunzip(u8) { const ds = new DecompressionStream('gzip'); const w = ds.writable.getWriter(); w.write(u8); w.close(); return new Uint8Array(await new Response(ds.readable).arrayBuffer()); }
+            async function _deriveKey(senha, salt) {
+                const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(senha), 'PBKDF2', false, ['deriveKey']);
+                return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 210000, hash: 'SHA-256' }, km, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+            }
+            const _dataStr = () => new Date().toISOString().split('T')[0];
+
+            function exportarDados() {
+                baixarArquivo(new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' }), `frota_${_dataStr()}.json`);
                 atualizarStatus("Backup exportado!");
             }
-            
-            function importarDados(file) {
-                const r = new FileReader();
-                r.onload = ev => {
-                    try {
-                        const imp = JSON.parse(ev.target.result);
-                        dados = { ...dados, ...imp };
-                        for(let k in ids) {
-                            if(dados[k] && dados[k].length) {
-                                ids[k] = Math.max(...dados[k].map(i => Number(i.id) || 0)) + 1;
-                            }
-                        }
-                        salvar();
-                        renderTudo();
-                        atualizarStatus("Dados importados!");
-                    } catch(err) { 
-                        alert("Arquivo inválido!"); 
+
+            // Exportar protegido (.pib): magic "FRT1" + flag(1) + salt(16) + iv(12) + ciphertext
+            async function exportarDadosProtegido() {
+                if(!window.crypto || !crypto.subtle) { alert("Criptografia indisponível neste navegador. Use o backup .json simples."); return; }
+                const senha = prompt("Defina uma senha para o backup:");
+                if(senha === null) return;
+                if(senha.length < 4) { alert("Use uma senha com pelo menos 4 caracteres."); return; }
+                if(prompt("Confirme a senha:") !== senha) { alert("As senhas não conferem."); return; }
+                try {
+                    let payload = new TextEncoder().encode(JSON.stringify(dados));
+                    const flag = _temGzip ? 1 : 0;
+                    if(flag) payload = await _gzip(payload);
+                    const salt = crypto.getRandomValues(new Uint8Array(16));
+                    const iv = crypto.getRandomValues(new Uint8Array(12));
+                    const key = await _deriveKey(senha, salt);
+                    const cipher = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, payload));
+                    const magic = new TextEncoder().encode("FRT1");
+                    const out = new Uint8Array(4 + 1 + 16 + 12 + cipher.length);
+                    out.set(magic, 0); out[4] = flag; out.set(salt, 5); out.set(iv, 21); out.set(cipher, 33);
+                    baixarArquivo(new Blob([out], { type: 'application/octet-stream' }), `frota_${_dataStr()}.pib`);
+                    atualizarStatus("Backup protegido exportado!");
+                } catch(err) { alert("Falha ao gerar o backup protegido."); }
+            }
+
+            function _aplicarBackup(imp) {
+                if(!imp || typeof imp !== 'object' || Array.isArray(imp)) throw new Error("formato");
+                dados = { ...dados, ...imp };
+                for(let k in ids) {
+                    if(dados[k] && dados[k].length) {
+                        ids[k] = Math.max(...dados[k].map(i => Number(i.id) || 0)) + 1;
                     }
-                };
-                r.readAsText(file);
+                }
+                salvar();
+                renderTudo();
+                atualizarStatus("Dados importados!");
+            }
+
+            // Importar — detecta automaticamente .json simples ou .pib protegido
+            async function importarDados(file) {
+                try {
+                    const buf = new Uint8Array(await file.arrayBuffer());
+                    const ehProtegido = buf.length > 33 && String.fromCharCode(buf[0], buf[1], buf[2], buf[3]) === "FRT1";
+                    let imported;
+                    if(ehProtegido) {
+                        if(!window.crypto || !crypto.subtle) throw new Error("cripto");
+                        const senha = prompt("Senha do backup protegido:");
+                        if(senha === null) return;
+                        const flag = buf[4], salt = buf.slice(5, 21), iv = buf.slice(21, 33), cipher = buf.slice(33);
+                        const key = await _deriveKey(senha, salt);
+                        let plain;
+                        try { plain = new Uint8Array(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, cipher)); }
+                        catch(_) { alert("Senha incorreta ou arquivo corrompido."); return; }
+                        if(flag === 1) plain = await _gunzip(plain);
+                        imported = JSON.parse(new TextDecoder().decode(plain));
+                    } else {
+                        imported = JSON.parse(new TextDecoder().decode(buf));
+                    }
+                    _aplicarBackup(imported);
+                } catch(err) {
+                    alert("Arquivo inválido ou erro ao restaurar o backup!");
+                }
             }
             
             function limparTudo() {
@@ -1336,22 +1445,28 @@
                 if(action === 'filtrarDespesas') renderDespesas();
                 
                 if(action === 'exportarDados') exportarDados();
+                if(action === 'exportarDadosProtegido') exportarDadosProtegido();
                 if(action === 'limparTudo') limparTudo();
                 if(action === 'importarDados') {
                     const input = document.createElement('input');
                     input.type = 'file';
-                    input.accept = '.json';
+                    input.accept = '.json,.pib';
                     input.onchange = (e) => { if(e.target.files[0]) importarDados(e.target.files[0]); };
                     input.click();
                 }
-                
+
                 if(action === 'removerArquivoTemp') { listaArquivosTemp.splice(idx,1); renderListaArquivosForm(); }
-                if(action === 'excluirArquivo') {
+                if(action === 'verArquivoTemp') openAnexo(listaArquivosTemp[idx]);
+                if(action === 'verArquivoVeiculo') {
                     const veiculoId = parseInt(btn.getAttribute('data-veiculo-id'));
-                    const arquivoId = parseFloat(btn.getAttribute('data-arquivo-id'));
+                    const v = dados.veiculos.find(ve => ve.id === veiculoId);
+                    if(v && v.arquivos && v.arquivos[idx]) openAnexo(v.arquivos[idx]);
+                }
+                if(action === 'excluirArquivoVeiculo') {
+                    const veiculoId = parseInt(btn.getAttribute('data-veiculo-id'));
                     const v = dados.veiculos.find(ve => ve.id === veiculoId);
                     if(v && v.arquivos) {
-                        v.arquivos = v.arquivos.filter(arq => arq.id !== arquivoId);
+                        v.arquivos.splice(idx, 1);
                         salvar();
                         verVeiculo(veiculoId);
                     }
@@ -1362,10 +1477,17 @@
                 if(action === 'fecharModalVeiculo') document.getElementById('modalVeiculoDetalhes').style.display = 'none';
             });
             
-            document.getElementById('vDocumento')?.addEventListener('change', (e) => {
-                if(e.target.files[0]) processarArquivo(e.target.files[0]);
-                e.target.value = '';
-            });
+            const _dropVeiculo = document.getElementById('dropzoneVeiculo');
+            const _inputVeiculo = document.getElementById('vDocumento');
+            _dropVeiculo?.addEventListener('click', () => _inputVeiculo?.click());
+            _inputVeiculo?.addEventListener('change', (e) => { adicionarArquivos(e.target.files); e.target.value = ''; });
+            ['dragover','dragenter'].forEach(ev => _dropVeiculo?.addEventListener(ev, (e) => { e.preventDefault(); _dropVeiculo.classList.add('drag'); }));
+            ['dragleave','drop'].forEach(ev => _dropVeiculo?.addEventListener(ev, (e) => { e.preventDefault(); _dropVeiculo.classList.remove('drag'); }));
+            _dropVeiculo?.addEventListener('drop', (e) => { if(e.dataTransfer.files.length) adicionarArquivos(e.dataTransfer.files); });
+
+            document.getElementById('lbClose')?.addEventListener('click', () => document.getElementById('lightbox').classList.remove('active'));
+            document.getElementById('lightbox')?.addEventListener('click', (e) => { if(e.target === document.getElementById('lightbox')) document.getElementById('lightbox').classList.remove('active'); });
+            document.addEventListener('keydown', (e) => { if(e.key === 'Escape') document.getElementById('lightbox')?.classList.remove('active'); });
             
             document.getElementById('revCustoMao')?.addEventListener('input', atualizarTotalRev);
             document.getElementById('repCusto')?.addEventListener('input', atualizarTotalRep);
